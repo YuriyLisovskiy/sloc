@@ -2,7 +2,7 @@ package parser
 
 import "strings"
 
-func getExt(fileName string) string {
+func GetExt(fileName string) string {
 	arr := strings.Split(fileName, ".")
 	res := "other"
 	if len(arr) > 0 {

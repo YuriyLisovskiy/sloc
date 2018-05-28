@@ -1,12 +1,12 @@
 package parser
 
 type Lang struct {
-	Name string
-	FilesCount int
-	LinesCount int
-	BlankLinesCount int
+	Name              string
+	FilesCount        int
+	LinesCount        int
+	BlankLinesCount   int
 	CommentLinesCount int
-	CodeLinesCount int
+	CodeLinesCount    int
 }
 
 type Comment struct {
