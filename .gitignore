@@ -13,3 +13,6 @@
 
 # GoLand files and folders
 .idea/
+
+# Other
+bin/
