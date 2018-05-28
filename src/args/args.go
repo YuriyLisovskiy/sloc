@@ -11,12 +11,12 @@ var (
 	filesFlag  = "mf"
 	dirPtr     = flag.String(dirFlag, "", "count lines of all files in directory")
 	filePtr    = flag.String(fileFlag, "", "count lines of one file")
-	filesPtr   = flag.String(fileFlag, "", "count lines of multiple files")
+	filesPtr   = flag.String(filesFlag, "", "count lines of multiple files")
 	jsonOutPtr = flag.Bool("json", false, "generate json result (default is std output)")
 )
 
-func splitMultFiles(filesStr string) []string {
-	files := strings.Split(filesStr, " ")
+func SplitMultFiles(filesStr string) []string {
+	files := strings.Split(strings.Join(strings.Fields(filesStr), " "), " ")
 	var result []string
 	for _, file := range files {
 		result = append(result, strings.TrimSpace(file))
@@ -26,7 +26,7 @@ func splitMultFiles(filesStr string) []string {
 
 func Get() (string, string, []string, bool, error) {
 	flag.Parse()
-	multipleFiles := splitMultFiles(*filesPtr)
+	multipleFiles := SplitMultFiles(*filesPtr)
 	err := validate(*dirPtr, *filePtr, multipleFiles)
 	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, err
 }
