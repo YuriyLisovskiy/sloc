@@ -1,7 +1,7 @@
 BINARY = sloc
 GOARCH = amd64
 
-FLAGS = src/sloc.go
+FLAGS = src/main.go
 
 all: clean test linux darwin windows
 
