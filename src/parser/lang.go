@@ -19,3 +19,10 @@ type AvailableLang struct {
 	SingleLineComment Comment
 	MultiLineComment  Comment
 }
+
+type LangList map[string]Lang
+
+func (l LangList) exists(key string) bool {
+	_, ok := l[key]
+	return ok
+}

@@ -7,9 +7,9 @@ import (
 )
 
 var (
-	stdOutLine = strings.Join(make([]string, 58), "-") + "\n"
-	stdOutHeader = stdOutLine + "Language\t\tFiles\tLines\tBlank\tComments\tCode\n" + stdOutLine
-	stdOutFormatData = "%s\t\t%d\t%d\t%d\t%d\t%d\n"
+	stdOutLine = strings.Join(make([]string, 61), "-") + "\n"
+	stdOutHeader = stdOutLine + "Language\tFiles\tLines\tBlank\tComments\tCode\n" + stdOutLine
+	stdOutFormatData = "%s\t\t%d\t%d\t%d\t%d\t\t%d\n"
 )
 
 func appendLangData(lang parser.Lang) string {

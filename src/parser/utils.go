@@ -12,9 +12,9 @@ var LangData = map[string]AvailableLang{
 		Comment{"/*", "*/"},
 	},
 	"go": {
-		"Golang",
-		Comment{"//", "\n"},
-		Comment{"/*", "*/"},
+		"Go",
+		Comment{"\\s*//", "\n"},
+		Comment{"\\s*/\\*", "\\*/\\s*"},
 	},
 	"java": {
 		"Java",
@@ -60,6 +60,11 @@ var LangData = map[string]AvailableLang{
 		"Yaml",
 		Comment{"#", "\n"},
 		Comment{"#", "\n"},
+	},
+	"other": {
+		"Other",
+		Comment{"", ""},
+		Comment{"", ""},
 	},
 }
 
