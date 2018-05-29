@@ -1,10 +1,10 @@
 package parser
 
 import (
-	"strings"
-	"io/ioutil"
 	"fmt"
 	"regexp"
+	"strings"
+	"io/ioutil"
 )
 
 type Enum int
@@ -40,8 +40,8 @@ func SplitFile(content string) []string {
 func ParseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
 	if len(ln) > 0 {
-		byteLn := []byte(ln)
 		if singleComment != "" || multiComment != "" {
+			byteLn := []byte(ln)
 			matchRes, err := regexp.Match(singleComment, byteLn)
 			if err == nil && matchRes {
 				return IsSingleComment
@@ -58,17 +58,17 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 }
 
 func ParseMultiLineComment(lines []string, endComment string) (int) {
-	delim := 1
+	index := 1
 	for i, line := range lines {
 		matchRes, err := regexp.Match(endComment, []byte(line))
 		if err == nil {
 			if matchRes {
-				delim += i
+				index += i
 				break
 			}
 		}
 	}
-	return delim
+	return index
 }
 
 func ParseFile(file string) (string, Lang, error) {
@@ -82,28 +82,33 @@ func ParseFile(file string) (string, Lang, error) {
 		return "", Lang{}, err
 	}
 	lines := SplitFile(content)
-	var result = Lang{FilesCount: 1}
-	for i := range lines {
+	blankLines := 0
+	commentLines := 0
+	for i := 0; i < len(lines); i++ {
 		lineType := ParseLine(lines[i], langData.SingleLineComment.Start, langData.MultiLineComment.Start)
 		switch lineType {
 		case IsBlank:
-			fmt.Println(i + 1, lines[i])
-			result.BlankLinesCount += 1
+			blankLines += 1
 		case IsSingleComment:
-			result.CommentLinesCount += 1
+			commentLines += 1
 		case IsMultiComment:
 			newIndex := ParseMultiLineComment(lines[i:], langData.MultiLineComment.End)
-			result.CommentLinesCount += newIndex - 1
+			commentLines += newIndex
 			i += newIndex
 		}
 	}
-	result.CodeLinesCount = len(lines) - (result.BlankLinesCount + result.CommentLinesCount)
-	result.LinesCount = len(lines)
-	result.Name = langData.Name
+	result := Lang{
+		Name:              langData.Name,
+		CommentLinesCount: commentLines,
+		BlankLinesCount:   blankLines,
+		CodeLinesCount:    len(lines) - (blankLines + commentLines),
+		LinesCount:        len(lines),
+		FilesCount:        1,
+	}
 	return ext, result, nil
 }
 
-func AppendTotal(current, lang Lang) Lang {
+func ConcatLangs(current, lang Lang) Lang {
 	return Lang{
 		CodeLinesCount:    current.CodeLinesCount + lang.CodeLinesCount,
 		CommentLinesCount: current.CommentLinesCount + lang.CommentLinesCount,
@@ -119,7 +124,7 @@ func Parse(files []string) ([]Lang, Lang) {
 	for _, f := range files {
 		key, val, err := ParseFile(f)
 		if err == nil {
-			total = AppendTotal(total, val)
+			total = ConcatLangs(total, val)
 			if langMap.exists(key) {
 				existentElem := langMap[key]
 				existentElem.FilesCount += val.FilesCount

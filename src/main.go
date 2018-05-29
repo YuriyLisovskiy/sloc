@@ -14,6 +14,6 @@ func main() {
 	fmt.Println(d, f, ff, j)
 */
 	path := "../../src/parser/"
-	languages, total := parser.Parse([]string{path + "parser.go"})
+	languages, total := parser.Parse([]string{path + "lang.go"})
 	utils.OutputToStd(languages, total)
 }
