@@ -12,5 +12,5 @@ func main() {
 		panic(err)
 	}
 	res, other, total := parser.Parse(parser.ReadDir(dir))
-	utils.OutputToStd(res, total, other, true)
+	utils.OutputToStd(res, total, &other)
 }
