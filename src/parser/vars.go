@@ -3,20 +3,19 @@ package parser
 type Enum int
 
 const (
-	IsSingleComment Enum = iota
-	IsMultiComment  Enum = iota
-	IsBlank         Enum = iota
-	Code            Enum = iota
-	IsDir           Enum = iota
-	IsRegular       Enum = iota
-	Err             Enum = iota
+	isSingleComment Enum = iota
+	isMultiComment  Enum = iota
+	isBlank         Enum = iota
+	isCode            Enum = iota
+	isDir           Enum = iota
+	isRegular       Enum = iota
 )
 
 var (
-	AvailableExtensions = []string{
+	availableExtensions = []string{
 		"c", "cpp", "go", "java", "rb", "py", "js", "cs", "xml", "html", "json", "yml",
 	}
-	LangData = map[string]AvailableLang{
+	languageData = map[string]AvailableLang{
 		"c": {
 			"C",
 			Comment{"//", "\n"},

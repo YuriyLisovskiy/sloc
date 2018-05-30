@@ -11,16 +11,16 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 	if len(ln) > 0 {
 		if singleComment != "" || multiComment != "" {
 			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
-				return IsSingleComment
+				return isSingleComment
 			}
 			if len(ln) >= multiCLength && ln[:multiCLength] == multiComment {
-				return IsMultiComment
+				return isMultiComment
 			}
 		}
 	} else {
-		return IsBlank
+		return isBlank
 	}
-	return Code
+	return isCode
 }
 
 func ParseMultiLineComment(lines []string, endComment string) (int) {
@@ -39,7 +39,7 @@ func ParseFile(file string) (string, Lang, error) {
 	if !ExtIsAllowed(ext) {
 		ext = "other"
 	}
-	langData := LangData[ext]
+	langData := languageData[ext]
 	content, err := ReadFile(file)
 	if err != nil {
 		return "", Lang{}, err
@@ -50,11 +50,11 @@ func ParseFile(file string) (string, Lang, error) {
 	for i := 0; i < len(lines); i++ {
 		lineType := ParseLine(lines[i], langData.SingleLineComment.Start, langData.MultiLineComment.Start)
 		switch lineType {
-		case IsBlank:
+		case isBlank:
 			blankLines += 1
-		case IsSingleComment:
+		case isSingleComment:
 			commentLines += 1
-		case IsMultiComment:
+		case isMultiComment:
 			newIndex := ParseMultiLineComment(lines[i:], langData.MultiLineComment.End)
 			commentLines += newIndex
 			i += newIndex

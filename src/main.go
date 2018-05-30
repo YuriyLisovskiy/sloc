@@ -2,8 +2,8 @@ package main
 
 import (
 	"github.com/YuriyLisovskiy/sloc/src/args"
-	"github.com/YuriyLisovskiy/sloc/src/parser"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
+	"github.com/YuriyLisovskiy/sloc/src/parser"
 )
 
 func main() {

@@ -1,10 +1,10 @@
 package parser
 
 import (
+	"os"
+	"log"
 	"strings"
 	"io/ioutil"
-	"log"
-	"os"
 )
 
 func NormalizeLang(ext string) string {
@@ -31,7 +31,7 @@ func GetExt(fileName string) string {
 }
 
 func ExtIsAllowed(ext string) bool {
-	for _, e := range AvailableExtensions {
+	for _, e := range availableExtensions {
 		if e == ext {
 			return true
 		}
@@ -82,9 +82,9 @@ func ReadDir(path string) ([]string) {
 	for _, pathData := range readResult {
 		pathName := pathData.Name()
 		switch pathInfo(path + pathName + "/") {
-		case IsDir:
+		case isDir:
 			dirs = append(dirs, path+pathName+"/")
-		case IsRegular:
+		case isRegular:
 			files = append(files, path+pathName)
 		}
 	}
@@ -96,7 +96,7 @@ func ReadDir(path string) ([]string) {
 
 func pathInfo(path string) Enum {
 	if _, err := os.Stat(path); err == nil {
-		return IsDir
+		return isDir
 	}
-	return IsRegular
+	return isRegular
 }
