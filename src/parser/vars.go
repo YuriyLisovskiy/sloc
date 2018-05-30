@@ -6,7 +6,7 @@ const (
 	isSingleComment Enum = iota
 	isMultiComment  Enum = iota
 	isBlank         Enum = iota
-	isCode            Enum = iota
+	isCode          Enum = iota
 	isDir           Enum = iota
 	isRegular       Enum = iota
 )
