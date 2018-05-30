@@ -24,11 +24,14 @@ func appendLangData(lang parser.Lang) string {
 	)
 }
 
-func OutputToStd(langs []parser.Lang, total parser.Lang) {
+func OutputToStd(langs []parser.Lang, total parser.Lang, other parser.Lang, containsOther bool) {
 	if len(langs) > 0 {
 		stdOut := stdOutHeader
 		for _, lang := range langs {
 			stdOut += appendLangData(lang)
+		}
+		if containsOther {
+			stdOut += stdOutLine + appendLangData(other)
 		}
 		stdOut += stdOutLine + appendLangData(total)
 		fmt.Println(stdOut)

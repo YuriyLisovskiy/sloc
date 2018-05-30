@@ -2,81 +2,41 @@ package parser
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
-	"io/ioutil"
 )
-
-type Enum int
-
-const (
-	IsSingleComment Enum = iota
-	IsMultiComment  Enum = iota
-	IsBlank         Enum = iota
-	Else            Enum = iota
-)
-
-func GetExt(fileName string) string {
-	arr := strings.Split(fileName, ".")
-	res := "other"
-	if len(arr) > 0 {
-		res = arr[len(arr)-1]
-	}
-	return res
-}
-
-func ReadFile(path string) (string, error) {
-	bytes, err := ioutil.ReadFile(path)
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
-}
-
-func SplitFile(content string) []string {
-	return strings.Split(content, "\n")
-}
 
 func ParseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
+	singleCLength, multiCLength := len(singleComment), len(multiComment)
 	if len(ln) > 0 {
 		if singleComment != "" || multiComment != "" {
-			byteLn := []byte(ln)
-			matchRes, err := regexp.Match(singleComment, byteLn)
-			if err == nil && matchRes {
+			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
 				return IsSingleComment
 			}
-			matchRes, err = regexp.Match(multiComment, byteLn)
-			if err == nil && matchRes {
+			if len(ln) >= multiCLength && ln[:multiCLength] == multiComment {
 				return IsMultiComment
 			}
 		}
 	} else {
 		return IsBlank
 	}
-	return Else
+	return Code
 }
 
 func ParseMultiLineComment(lines []string, endComment string) (int) {
 	index := 1
 	for i, line := range lines {
-		matchRes, err := regexp.Match(endComment, []byte(line))
-		if err == nil {
-			if matchRes {
-				index += i
-				break
-			}
+		if strings.Contains(line, endComment) {
+			index += i
+			break
 		}
 	}
 	return index
 }
 
 func ParseFile(file string) (string, Lang, error) {
-	langData := LangData["other"]
-	ext := GetExt(file)
-	if _, ok := LangData[GetExt(file)]; ok {
-		langData = LangData[ext]
-	}
+	ext := NormalizeLang(GetExt(file))
+	langData := LangData[ext]
 	content, err := ReadFile(file)
 	if err != nil {
 		return "", Lang{}, err
@@ -108,24 +68,13 @@ func ParseFile(file string) (string, Lang, error) {
 	return ext, result, nil
 }
 
-func ConcatLangs(current, lang Lang) Lang {
-	return Lang{
-		CodeLinesCount:    current.CodeLinesCount + lang.CodeLinesCount,
-		CommentLinesCount: current.CommentLinesCount + lang.CommentLinesCount,
-		BlankLinesCount:   current.BlankLinesCount + lang.BlankLinesCount,
-		LinesCount:        current.LinesCount + lang.LinesCount,
-		FilesCount:        current.FilesCount + lang.FilesCount,
-	}
-}
-
-func Parse(files []string) ([]Lang, Lang) {
-	var langMap = make(LangList)
-	var total Lang
-	for _, f := range files {
-		key, val, err := ParseFile(f)
+func Parse(files []string) ([]Lang, Lang, Lang) {
+	langMap, total := make(map[string]Lang), Lang{Name: "Total"}
+	for _, file := range files {
+		key, val, err := ParseFile(file)
 		if err == nil {
 			total = ConcatLangs(total, val)
-			if langMap.exists(key) {
+			if _, ok := langMap[key]; ok {
 				existentElem := langMap[key]
 				existentElem.FilesCount += val.FilesCount
 				existentElem.LinesCount += val.LinesCount
@@ -136,13 +85,16 @@ func Parse(files []string) ([]Lang, Lang) {
 			}
 			langMap[key] = val
 		} else {
-			fmt.Println("parser.Parse: something went wrong with file '" + f + "'...")
+			fmt.Println("parser.Parse: something went wrong with file '" + file + "'...")
 		}
 	}
 	var result []Lang
+	other := Lang{}
+	if _, ok := langMap["other"]; ok {
+		other = langMap["other"]
+	}
 	for _, value := range langMap {
 		result = append(result, value)
 	}
-	total.Name = "Total"
-	return result, total
+	return result, other, total
 }

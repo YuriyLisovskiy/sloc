@@ -1,19 +1,16 @@
 package main
 
 import (
+	"github.com/YuriyLisovskiy/sloc/src/args"
 	"github.com/YuriyLisovskiy/sloc/src/parser"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 )
 
 func main() {
-/*
-	d, f, ff, j, err := args.Get()
+	dir, _, _, _, err := args.Parse()
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(d, f, ff, j)
-*/
-	path := "../../src/parser/"
-	languages, total := parser.Parse([]string{path + "lang.go"})
-	utils.OutputToStd(languages, total)
+	res, other, total := parser.Parse(parser.ReadDir(dir))
+	utils.OutputToStd(res, total, other, true)
 }
