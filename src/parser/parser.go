@@ -36,6 +36,9 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 
 func ParseFile(file string) (string, Lang, error) {
 	ext := NormalizeLang(GetExt(file))
+	if !ExtIsAllowed(ext) {
+		ext = "other"
+	}
 	langData := LangData[ext]
 	content, err := ReadFile(file)
 	if err != nil {
@@ -89,9 +92,11 @@ func Parse(files []string) ([]Lang, Lang, Lang) {
 		}
 	}
 	var result []Lang
+	otherKey := "other"
 	other := Lang{}
-	if _, ok := langMap["other"]; ok {
-		other = langMap["other"]
+	if _, ok := langMap[otherKey]; ok {
+		other = langMap[otherKey]
+		delete(langMap, otherKey)
 	}
 	for _, value := range langMap {
 		result = append(result, value)

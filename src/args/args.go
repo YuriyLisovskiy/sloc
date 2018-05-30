@@ -17,6 +17,6 @@ func SplitMultFiles(filesStr string) []string {
 func Parse() (string, string, []string, bool, error) {
 	flag.Parse()
 	multipleFiles := SplitMultFiles(*filesPtr)
-	err := validate(*dirPtr, *filePtr, multipleFiles)
-	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, err
+//	err := validate(*dirPtr, *filePtr, multipleFiles)
+	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, nil
 }

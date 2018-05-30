@@ -23,17 +23,20 @@ func NormalizeLang(ext string) string {
 
 func GetExt(fileName string) string {
 	arr := strings.Split(GetFileNameFromPath(fileName), ".")
-	res := "other"
+	res := ""
 	if len(arr) > 0 {
-		ext := arr[len(arr)-1]
-		for _, e := range AvailableExtensions {
-			if e == ext {
-				res = ext
-				break
-			}
-		}
+		return arr[len(arr)-1]
 	}
 	return res
+}
+
+func ExtIsAllowed(ext string) bool {
+	for _, e := range AvailableExtensions {
+		if e == ext {
+			return true
+		}
+	}
+	return false
 }
 
 func GetFileNameFromPath(path string) string {
