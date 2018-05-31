@@ -5,25 +5,30 @@
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ```
 ## Build
-`make all-os` to build for all supported operating systems. 
-
-`make all` to run tests and build for all supported operating systems.
+To build for all supported operating systems:
+```
+$ make all-os
+``` 
+To run tests and build for all supported operating systems:
+```
+$ make all
+```
 
 Available operating systems build:
-* **Linux**: `make linux` - to build all supported linux architectures, other:
-    * `make linux-386`
-    * `make linux-amd64`
-    * `make linux-arm`
-    * `make linux-arm64`
-* **Windows**: `make windows` - to build all supported windows architectures, other:
-    * `make windows-386`
-    * `make windows-amd64`
-* **Darwin**: `make darwin` - to build all supported darwin architectures, other:
-    * `make darwin-386`
-    * `make darwin-amd64`
-* **FreeBSD**: `make freebsd` - to build all supported freebsd architectures, other:
+* **Linux**: `$ make linux` - to build all supported linux architectures, other:
+    * `$ make linux-386`
+    * `$ make linux-amd64`
+    * `$ make linux-arm`
+    * `$ make linux-arm64`
+* **Windows**: `$ make windows` - to build all supported windows architectures, other:
+    * `$ make windows-386`
+    * `$ make windows-amd64`
+* **Darwin**: `$ make darwin` - to build all supported darwin architectures, other:
+    * `$ make darwin-386`
+    * `$ make darwin-amd64`
+* **FreeBSD**: `$ make freebsd` - to build all supported freebsd architectures, other:
 * **Solaris**(only amd64):
-    * `make solaris`
+    * `$ make solaris`
 ## Usage
 By default, `sloc` will count lines of code in current directory:
 ```
@@ -79,11 +84,11 @@ $ ./sloc --help
 ```
 Also You can save output to a file:
 * **Json**: 
-    * `./sloc -j`
-    * `./sloc -j -c path/to/result.json`
+    * `$ ./sloc -j`
+    * `$ ./sloc -j -c path/to/result.json`
 * **Xml**:
-    * `./sloc -x`
-    * `./sloc -x -c path/to/result.xml`
+    * `$ ./sloc -x`
+    * `$ ./sloc -x -c path/to/result.xml`
 * **Yaml**:
-    * `./sloc -y`
-    * `./sloc -y -c path/to/result.yml`
+    * `$ ./sloc -y`
+    * `$ ./sloc -y -c path/to/result.yml`
