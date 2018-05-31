@@ -17,14 +17,11 @@ func appendLangData(lang parser.Lang) string {
 	)
 }
 
-func OutputToStd(langs []parser.Lang, total parser.Lang, other *parser.Lang) {
+func OutputToStd(langs []parser.Lang, total parser.Lang) {
 	if len(langs) > 0 {
 		stdOut := stdOutHeader
 		for _, lang := range langs {
 			stdOut += appendLangData(lang)
-		}
-		if other != nil {
-			stdOut += stdOutLine + appendLangData(*other)
 		}
 		stdOut += stdOutLine + appendLangData(total)
 		fmt.Println(stdOut)

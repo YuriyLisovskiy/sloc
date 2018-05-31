@@ -1,11 +1,26 @@
 package args
 
 import (
+	"os"
 	"fmt"
 	"errors"
 )
 
-var argsError = "sloc args error: use%s -%s or -%s"
+func isDir(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.Mode().IsDir()
+}
+
+func isFile(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return true
+	}
+	return info.Mode().IsRegular()
+}
 
 func validate(dir, file string, files []string) error {
 	if len(dir) == 0 && len(file) == 0 && len(files) == 0 {
@@ -22,6 +37,12 @@ func validate(dir, file string, files []string) error {
 		}
 		if len(dir) > 0 && len(file) > 0 && len(files) > 0 {
 			return errors.New(fmt.Sprintf(argsError + " or -%s", " only", dirFlag, fileFlag, filesFlag))
+		}
+		if len(dir) > 0 && !isDir(dir) {
+			return errors.New(fmt.Sprintf(err + " is not a directory", dir))
+		}
+		if len(file) > 0 && !isFile(file) {
+			return errors.New(fmt.Sprintf(err + " is not a file", file))
 		}
 	}
 	return nil

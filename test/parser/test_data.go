@@ -5,8 +5,8 @@ var normalizeLangTestData = []struct {
 	expected string
 }{
 	{"cs", "cs"},
-	{"h", "c"},
-	{"hpp", "cpp"},
+	{"h", "ccpph"},
+	{"cc", "cpp"},
 	{"yaml", "yml"},
 	{"htm", "html"},
 }

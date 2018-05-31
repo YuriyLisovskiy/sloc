@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"fmt"
+	"errors"
 	"strings"
 )
 
@@ -9,7 +9,7 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
 	singleCLength, multiCLength := len(singleComment), len(multiComment)
 	if len(ln) > 0 {
-		if singleComment != "" || multiComment != "" {
+		if singleComment != nilString || multiComment != nilString {
 			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
 				return isSingleComment
 			}
@@ -36,8 +36,8 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 
 func ParseFile(file string) (string, Lang, error) {
 	ext := NormalizeLang(GetExt(file))
-	if !ExtIsAllowed(ext) {
-		ext = "other"
+	if !ExtIsRecognized(ext) {
+		return "", Lang{}, errors.New("unrecognized file")
 	}
 	langData := languageData[ext]
 	content, err := ReadFile(file)
@@ -71,7 +71,7 @@ func ParseFile(file string) (string, Lang, error) {
 	return ext, result, nil
 }
 
-func Parse(files []string) ([]Lang, Lang, Lang) {
+func Parse(files []string) ([]Lang, Lang) {
 	langMap, total := make(map[string]Lang), Lang{Name: "Total"}
 	for _, file := range files {
 		key, val, err := ParseFile(file)
@@ -87,19 +87,11 @@ func Parse(files []string) ([]Lang, Lang, Lang) {
 				val = existentElem
 			}
 			langMap[key] = val
-		} else {
-			fmt.Println("parser.Parse: something went wrong with file '" + file + "'...")
 		}
 	}
 	var result []Lang
-	otherKey := "other"
-	other := Lang{}
-	if _, ok := langMap[otherKey]; ok {
-		other = langMap[otherKey]
-		delete(langMap, otherKey)
-	}
 	for _, value := range langMap {
 		result = append(result, value)
 	}
-	return result, other, total
+	return result, total
 }

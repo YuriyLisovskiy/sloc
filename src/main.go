@@ -7,10 +7,18 @@ import (
 )
 
 func main() {
-	dir, _, _, _, err := args.Parse()
+	dir, file, multipleFiles, _, err := args.Parse()
 	if err != nil {
-		panic(err)
+		return
 	}
-	res, other, total := parser.Parse(parser.ReadDir(dir))
-	utils.OutputToStd(res, total, &other)
+	var res []parser.Lang
+	var total parser.Lang
+	if dir != "" {
+		res, total = parser.Parse(parser.ReadDir(dir))
+	} else if file != "" {
+		res, total = parser.Parse([]string{file})
+	} else if len(multipleFiles) > 0 {
+		res, total = parser.Parse(multipleFiles)
+	}
+	utils.OutputToStd(res, total)
 }

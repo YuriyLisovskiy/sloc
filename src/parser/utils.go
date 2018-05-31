@@ -9,11 +9,11 @@ import (
 
 func NormalizeLang(ext string) string {
 	switch ext {
-	case "h":
-		ext = "c"
-	case "hpp":
+	case "h", "hpp", "hh", "hxx":
+		ext = "ccpph"
+	case "cc", "cxx":
 		ext = "cpp"
-	case "htm":
+	case "htm", "xhtml":
 		ext = "html"
 	case "yaml":
 		ext = "yml"
@@ -30,7 +30,7 @@ func GetExt(fileName string) string {
 	return res
 }
 
-func ExtIsAllowed(ext string) bool {
+func ExtIsRecognized(ext string) bool {
 	for _, e := range availableExtensions {
 		if e == ext {
 			return true
@@ -70,7 +70,7 @@ func ReadFile(path string) (string, error) {
 	return string(bytes), nil
 }
 
-func ReadDir(path string) ([]string) {
+func ReadDir(path string) []string {
 	readResult, err := ioutil.ReadDir(path)
 	if err != nil {
 		log.Fatal(err)
@@ -99,4 +99,20 @@ func pathInfo(path string) Enum {
 		return isDir
 	}
 	return isRegular
+}
+
+func PrintStatus(current, max int) {
+	barWidth := 50
+	progress := (current * barWidth) / max
+	print("Progress: [")
+	for i := 0; i < barWidth; i++ {
+		if i < progress {
+			print("#")
+		} else if i == progress {
+			print(">")
+		} else {
+			print(" ")
+		}
+	}
+	print("]", progress * 2, "%\r")
 }

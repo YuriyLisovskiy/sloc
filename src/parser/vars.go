@@ -9,6 +9,7 @@ const (
 	isCode          Enum = iota
 	isDir           Enum = iota
 	isRegular       Enum = iota
+	nilString            = ""
 )
 
 var (
@@ -16,6 +17,11 @@ var (
 		"c", "cpp", "go", "java", "rb", "py", "js", "cs", "xml", "html", "json", "yml",
 	}
 	languageData = map[string]AvailableLang{
+		"ccpph": {
+			"C/C++ Header",
+			Comment{"//", "\n"},
+			Comment{"/*", "*/"},
+		},
 		"c": {
 			"C",
 			Comment{"//", "\n"},
@@ -76,10 +82,15 @@ var (
 			Comment{"#", "\n"},
 			Comment{"#", "\n"},
 		},
+		"txt": {
+			"Plain text",
+			Comment{nilString, nilString},
+			Comment{nilString, nilString},
+		},
 		"other": {
 			"Other",
-			Comment{"", ""},
-			Comment{"", ""},
+			Comment{nilString, nilString},
+			Comment{nilString, nilString},
 		},
 	}
 )
