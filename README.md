@@ -30,6 +30,9 @@ Available operating systems build:
 	* `$ make darwin-386`
 	* `$ make darwin-amd64`
 * **FreeBSD**: `$ make freebsd` - to build all supported freebsd architectures, other:
+	* `$ make freebsd-386`
+	* `$ make freebsd-amd64`
+	* `$ make freebsd-arm`
 * **Solaris**(only amd64):
 	* `$ make solaris`
 ## Testing
