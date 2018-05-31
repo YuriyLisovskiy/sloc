@@ -1,5 +1,7 @@
-# SLOC - **S**ource **L**ines **O**f **C**ode
-[![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)
+# SLOC - Source Lines Of Code
+| **`License`** | **`Language`** | **`Travis CI`** |
+|-----------------|---------------------|------------------|
+|[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE) | [![Language](https://img.shields.io/badge/Go-1.10-blue.svg)](https://golang.org/) | [![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)|
 ## Download
 ```
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
@@ -15,7 +17,6 @@ To run tests and build for all supported operating systems:
 ```
 $ make all
 ```
-
 Available operating systems build:
 * **Linux**: `$ make linux` - to build all supported linux architectures, other:
 	* `$ make linux-386`
@@ -101,3 +102,5 @@ Also You can save output to a file:
 	* `$ ./sloc -y -c path/to/result.yml`
 ## Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
+## License
+ This project is licensed under BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
