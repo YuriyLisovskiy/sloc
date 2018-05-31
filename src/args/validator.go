@@ -22,7 +22,13 @@ func isFile(path string) bool {
 	return info.Mode().IsRegular()
 }
 
-func validate(dir, file string, files []string) error {
+func Validate(dir, file string, files []string) error {
+	err := ValidateParams(dir, file, files)
+	err = validatePath(dir, file)
+	return err
+}
+
+func ValidateParams(dir, file string, files []string) error {
 	if len(dir) == 0 && len(file) == 0 && len(files) == 0 {
 		return errors.New(fmt.Sprintf(argsError + " or -%s", "", dirFlag, fileFlag, filesFlag))
 	} else {
@@ -38,12 +44,16 @@ func validate(dir, file string, files []string) error {
 		if len(dir) > 0 && len(file) > 0 && len(files) > 0 {
 			return errors.New(fmt.Sprintf(argsError + " or -%s", " only", dirFlag, fileFlag, filesFlag))
 		}
-		if len(dir) > 0 && !isDir(dir) {
-			return errors.New(fmt.Sprintf(err + " is not a directory", dir))
-		}
-		if len(file) > 0 && !isFile(file) {
-			return errors.New(fmt.Sprintf(err + " is not a file", file))
-		}
+	}
+	return nil
+}
+
+func validatePath(dir, file string) error {
+	if len(dir) > 0 && !isDir(dir) {
+		return errors.New(fmt.Sprintf(err + " is not a directory", dir))
+	}
+	if len(file) > 0 && !isFile(file) {
+		return errors.New(fmt.Sprintf(err + " is not a file", file))
 	}
 	return nil
 }

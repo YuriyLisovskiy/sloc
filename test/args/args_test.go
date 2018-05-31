@@ -5,22 +5,22 @@ import (
 	"github.com/YuriyLisovskiy/sloc/src/args"
 )
 
-var SplitMultFilesTestData = []struct {
-	input    string
-	expected []string
-}{
-	{"file1.cs file2.go file3.cpp", []string{"file1.cs", "file2.go", "file3.cpp"}},
-	{"file1.cs", []string{"file1.cs"}},
-	{" file1.cs    file2.hpp  ", []string{"file1.cs", "file2.hpp"}},
-}
-
 func TestSplitMultFiles(test *testing.T) {
 	for _, td := range SplitMultFilesTestData {
 		actual := args.SplitMultFiles(td.input)
 		for i, a := range actual {
 			if a != td.expected[i] {
-				test.Errorf("args.SplitMultFiles(%s): expected %s, actual %s", td.input, td.expected, actual)
+				test.Errorf("args.TestSplitMultFiles: expected %s, actual %s", td.expected, actual)
 			}
+		}
+	}
+}
+
+func TestValidateParams(test *testing.T) {
+	for _, td := range ValidateTestData {
+		actual := args.ValidateParams(td.dir, td.file, td.files) == nil
+		if actual != td.expected {
+			test.Errorf("args.TestValidate: expected %t, actual %t", td.expected, actual)
 		}
 	}
 }

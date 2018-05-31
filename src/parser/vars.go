@@ -9,12 +9,12 @@ const (
 	isCode          Enum = iota
 	isDir           Enum = iota
 	isRegular       Enum = iota
-	nilString            = ""
+	emptyString            = ""
 )
 
 var (
 	availableExtensions = []string{
-		"c", "cpp", "go", "java", "rb", "py", "js", "cs", "xml", "html", "json", "yml",
+		"ccpph", "c", "cpp", "go", "java", "rb", "py", "js", "cs", "xml", "html", "json", "yml", "txt",
 	}
 	languageData = map[string]AvailableLang{
 		"ccpph": {
@@ -84,13 +84,8 @@ var (
 		},
 		"txt": {
 			"Plain text",
-			Comment{nilString, nilString},
-			Comment{nilString, nilString},
-		},
-		"other": {
-			"Other",
-			Comment{nilString, nilString},
-			Comment{nilString, nilString},
+			Comment{emptyString, emptyString},
+			Comment{emptyString, emptyString},
 		},
 	}
 )

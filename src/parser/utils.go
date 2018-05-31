@@ -30,8 +30,8 @@ func GetExt(fileName string) string {
 	return res
 }
 
-func ExtIsRecognized(ext string) bool {
-	for _, e := range availableExtensions {
+func ExtIsRecognized(ext string, available []string) bool {
+	for _, e := range available {
 		if e == ext {
 			return true
 		}
@@ -43,6 +43,12 @@ func GetFileNameFromPath(path string) string {
 	index := strings.LastIndex(path, "/")
 	if index == -1 {
 		return path
+	}
+	pathLen := len(path)
+	if pathLen > 0 {
+		if path[pathLen - 1] == '/' {
+			return path
+		}
 	}
 	return path[index+1:]
 }

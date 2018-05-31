@@ -5,25 +5,14 @@ import (
 	"github.com/YuriyLisovskiy/sloc/src/parser"
 )
 
-func appendLangData(lang parser.Lang) string {
-	return fmt.Sprintf(
-		stdOutFormatData,
-		lang.Name,
-		lang.FilesCount,
-		lang.LinesCount,
-		lang.BlankLinesCount,
-		lang.CommentLinesCount,
-		lang.CodeLinesCount,
-	)
-}
-
 func OutputToStd(langs []parser.Lang, total parser.Lang) {
 	if len(langs) > 0 {
-		stdOut := stdOutHeader
+		line, header, dataFormat := GetTemplates(langs)
+		stdOut := header
 		for _, lang := range langs {
-			stdOut += appendLangData(lang)
+			stdOut += AppendLangData(lang, dataFormat)
 		}
-		stdOut += stdOutLine + appendLangData(total)
+		stdOut += line + AppendLangData(total, dataFormat)
 		fmt.Println(stdOut)
 	} else {
 		fmt.Println("There is no any files to count")

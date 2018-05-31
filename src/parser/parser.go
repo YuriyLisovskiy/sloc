@@ -9,7 +9,7 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
 	singleCLength, multiCLength := len(singleComment), len(multiComment)
 	if len(ln) > 0 {
-		if singleComment != nilString || multiComment != nilString {
+		if singleComment != emptyString || multiComment != emptyString {
 			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
 				return isSingleComment
 			}
@@ -36,7 +36,7 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 
 func ParseFile(file string) (string, Lang, error) {
 	ext := NormalizeLang(GetExt(file))
-	if !ExtIsRecognized(ext) {
+	if !ExtIsRecognized(ext, availableExtensions) {
 		return "", Lang{}, errors.New("unrecognized file")
 	}
 	langData := languageData[ext]

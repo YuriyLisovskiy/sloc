@@ -19,7 +19,7 @@ func SplitMultFiles(filesStr string) []string {
 func Parse() (string, string, []string, bool, error) {
 	flag.Parse()
 	multipleFiles := SplitMultFiles(*filesPtr)
-	err := validate(*dirPtr, *filePtr, multipleFiles)
+	err := Validate(*dirPtr, *filePtr, multipleFiles)
 	if err != nil {
 		println(err.Error())
 	}
