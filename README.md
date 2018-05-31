@@ -5,7 +5,7 @@
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ```
 ## Build
-> Minimum version required: `go1.10`
+> Minimum version required: `go1.10`, see [golang installation](https://golang.org/doc/install)
 
 To build for all supported operating systems:
 ```
