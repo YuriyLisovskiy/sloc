@@ -1,16 +1,10 @@
 package args
 
-import "flag"
-
 var (
-	dirFlag    = "d"
-	fileFlag   = "f"
-	filesFlag  = "m"
-	dirPtr     = flag.String(dirFlag, "", "count lines of all files in directory")
-	filePtr    = flag.String(fileFlag, "", "count lines of one file")
-	filesPtr   = flag.String(filesFlag, "", "count lines of multiple files")
-	jsonOutPtr = flag.Bool("json", false, "generate json result (default is std output)")
-	help       = flag.Bool("help", false, "read usage info")
-	argsError  = "sloc args error: use%s -%s or -%s"
-	err        = "sloc args error: '%s'"
+	dirFlag            = "d"
+	fileFlag           = "f"
+	filesFlag          = "m"
+	argsError          = "sloc args error: use%s -%s or -%s"
+	err                = "sloc args error: '%s'"
+	DefaultOutFileName = "sloc_result"
 )

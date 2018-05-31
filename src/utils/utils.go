@@ -1,8 +1,10 @@
 package utils
 
 import (
+	"os"
 	"fmt"
 	"math"
+	"errors"
 	"strings"
 	"strconv"
 	"github.com/YuriyLisovskiy/sloc/src/parser"
@@ -72,4 +74,18 @@ func AppendLangData(lang parser.Lang, formatString string) string {
 		lang.CommentLinesCount,
 		lang.CodeLinesCount,
 	)
+}
+
+func writeToFile(path, data string) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return errors.New(fmt.Sprintf("cannot create file '%s': %s", path, err.Error()))
+	}
+	defer file.Close()
+	fmt.Fprintf(file, data)
+	return nil
+}
+
+func createDir(path string) error {
+	return os.MkdirAll(path,0777)
 }

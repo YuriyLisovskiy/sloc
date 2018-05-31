@@ -16,12 +16,47 @@ func SplitMultFiles(filesStr string) []string {
 	return result
 }
 
-func Parse() (string, string, []string, bool, error) {
+func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 	flag.Parse()
+	parseOutPath()
 	multipleFiles := SplitMultFiles(*filesPtr)
-	err := Validate(*dirPtr, *filePtr, multipleFiles)
-	if err != nil {
-		println(err.Error())
+	var err error = nil
+	isHelp := false
+	if *h || *help || *dashHelp {
+		isHelp = true
+		flag.Usage()
+	} else {
+		err = Validate(*dirPtr, *filePtr, multipleFiles)
 	}
-	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, err
+	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, *xmlOutPtr, *ymlOutPtr, isHelp, err
+}
+
+func eraseExt(name string) string {
+	if index := strings.LastIndex(name, "."); index != -1 {
+		name = name[:index]
+	}
+	return name
+}
+
+func parseOutPath() {
+	path := *OutPathPtr
+	if path == "" || path == "." {
+		path = "./"
+	}
+	if path != "./" {
+		pathLen := len(path)
+		if pathLen > 0 {
+			if path[pathLen-1] != '/' {
+				index := strings.LastIndex(path, "/")
+				if index == -1 {
+					DefaultOutFileName = eraseExt(path)
+					path = "./"
+				} else {
+					DefaultOutFileName = eraseExt(path[index+1:])
+					path = path[:index+1]
+				}
+			}
+		}
+	}
+	*OutPathPtr = path
 }
