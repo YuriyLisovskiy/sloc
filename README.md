@@ -1,13 +1,13 @@
 # SLOC - Source Lines Of Code
 | **`License`** | **`Language`** | **`Travis CI`** |
 |-----------------|---------------------|------------------|
-|[![License](https://img.shields.io/badge/License-BSD%203--Clause-blue.svg)](LICENSE) | [![Language](https://img.shields.io/badge/Go-1.10-blue.svg)](https://golang.org/) | [![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)|
+|[![License](https://img.shields.io/badge/BSD-3--Clause-orange.svg)](LICENSE) | [![Language](https://img.shields.io/badge/Go-1.10-blue.svg)](https://golang.org/) | [![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)|
 ## Download
 ```
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ```
 ## Build
-> Minimum version required: `go1.10`, see [golang installation](https://golang.org/doc/install)
+> Minimum version of Go language required: `go1.10`, see [golang installation](https://golang.org/doc/install)
 
 To build for all supported operating systems:
 ```
