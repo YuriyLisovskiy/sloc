@@ -22,7 +22,7 @@ func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 	multipleFiles := SplitMultFiles(*filesPtr)
 	var err error = nil
 	isHelp := false
-	if *h || *help || *dashHelp {
+	if *h || *help {
 		isHelp = true
 		flag.Usage()
 	} else {
