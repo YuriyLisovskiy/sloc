@@ -100,6 +100,21 @@ Also You can save output to a file:
 * **Yaml**:
 	* `$ ./sloc -y`
 	* `$ ./sloc -y -c path/to/result.yml`
+### Supported languages
+* C
+* C++
+* C#
+* C/C++ Header
+* Go
+* Html
+* Java
+* JavaScript
+* Json
+* Plain text
+* Python
+* Ruby
+* Xml
+* Yaml
 ## Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
 ## License
