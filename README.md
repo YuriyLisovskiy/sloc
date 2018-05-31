@@ -10,19 +10,20 @@ $ git clone https://github.com/YuriyLisovskiy/sloc.git
 `make all` to run tests and build for all supported operating systems.
 
 Available operating systems build:
-* **Linux (`make linux` - to build all supported linux architectures):** 
+* **Linux**: `make linux` - to build all supported linux architectures, other:
     * `make linux-386`
     * `make linux-amd64`
     * `make linux-arm`
     * `make linux-arm64`
-* **Windows (`make windows` - to build all supported windows architectures):**
+* **Windows**: `make windows` - to build all supported windows architectures, other:
     * `make windows-386`
     * `make windows-amd64`
-* **Darwin (`make darwin` - to build all supported darwin architectures):**
+* **Darwin**: `make darwin` - to build all supported darwin architectures, other:
     * `make darwin-386`
     * `make darwin-amd64`
-* **FreeBSD (`make freebsd` - to build all supported freebsd architectures):**
-* **Solaris (only amd64):** `make solaris` 
+* **FreeBSD**: `make freebsd` - to build all supported freebsd architectures, other:
+* **Solaris**(only amd64):
+    * `make solaris`
 ## Usage
 By default, `sloc` will count lines of code in current directory:
 ```
