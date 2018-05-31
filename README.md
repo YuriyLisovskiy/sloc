@@ -5,6 +5,8 @@
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ```
 ## Build
+> Minimum version required: `go1.10`
+
 To build for all supported operating systems:
 ```
 $ make all-os
@@ -16,19 +18,24 @@ $ make all
 
 Available operating systems build:
 * **Linux**: `$ make linux` - to build all supported linux architectures, other:
-    * `$ make linux-386`
-    * `$ make linux-amd64`
-    * `$ make linux-arm`
-    * `$ make linux-arm64`
+	* `$ make linux-386`
+	* `$ make linux-amd64`
+	* `$ make linux-arm`
+	* `$ make linux-arm64`
 * **Windows**: `$ make windows` - to build all supported windows architectures, other:
-    * `$ make windows-386`
-    * `$ make windows-amd64`
+	* `$ make windows-386`
+	* `$ make windows-amd64`
 * **Darwin**: `$ make darwin` - to build all supported darwin architectures, other:
-    * `$ make darwin-386`
-    * `$ make darwin-amd64`
+	* `$ make darwin-386`
+	* `$ make darwin-amd64`
 * **FreeBSD**: `$ make freebsd` - to build all supported freebsd architectures, other:
 * **Solaris**(only amd64):
-    * `$ make solaris`
+	* `$ make solaris`
+## Testing
+To run tests:
+```
+$ make test
+```
 ## Usage
 By default, `sloc` will count lines of code in current directory:
 ```
@@ -84,11 +91,13 @@ $ ./sloc --help
 ```
 Also You can save output to a file:
 * **Json**: 
-    * `$ ./sloc -j`
-    * `$ ./sloc -j -c path/to/result.json`
+	* `$ ./sloc -j`
+	* `$ ./sloc -j -c path/to/result.json`
 * **Xml**:
-    * `$ ./sloc -x`
-    * `$ ./sloc -x -c path/to/result.xml`
+	* `$ ./sloc -x`
+	* `$ ./sloc -x -c path/to/result.xml`
 * **Yaml**:
-    * `$ ./sloc -y`
-    * `$ ./sloc -y -c path/to/result.yml`
+	* `$ ./sloc -y`
+	* `$ ./sloc -y -c path/to/result.yml`
+## Author
+* [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
