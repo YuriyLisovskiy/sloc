@@ -78,13 +78,7 @@ func Parse(files []string) ([]Lang, Lang) {
 		if err == nil {
 			total = ConcatLangs(total, val)
 			if _, ok := langMap[key]; ok {
-				existentElem := langMap[key]
-				existentElem.FilesCount += val.FilesCount
-				existentElem.LinesCount += val.LinesCount
-				existentElem.BlankLinesCount += val.BlankLinesCount
-				existentElem.CommentLinesCount += val.CommentLinesCount
-				existentElem.CodeLinesCount += val.CodeLinesCount
-				val = existentElem
+				val = ConcatLangs(langMap[key], val)
 			}
 			langMap[key] = val
 		}
