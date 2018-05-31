@@ -24,7 +24,6 @@ func main() {
 				if err = utils.OutputToJson(res, total); err != nil {
 					fmt.Println(err.Error())
 				}
-
 			}
 			if xmlOut {
 				if utils.OutputToXml(res, total); err != nil {

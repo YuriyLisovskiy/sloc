@@ -29,7 +29,7 @@ freebsd:
 	GOOS=freebsd GOARCH=${ARCH64_amd64} go build -o bin/freebsd/${ARCH64_amd64}/${BINARY}.out ${FLAGS}
 
 solaris:
-   GOOS=solaris GOARCH=${ARCH64_amd64} go build -o bin/solaris/${ARCH64_amd64}/${BINARY}.bin ${FLAGS}
+	GOOS=solaris GOARCH=${ARCH64_amd64} go build -o bin/solaris/${ARCH64_amd64}/${BINARY}.bin ${FLAGS}
 
 test:
 	go test ./test/...

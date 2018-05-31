@@ -18,6 +18,7 @@ func SplitMultFiles(filesStr string) []string {
 
 func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 	flag.Parse()
+	normalize()
 	parseOutPath()
 	multipleFiles := SplitMultFiles(*filesPtr)
 	var err error = nil
@@ -29,6 +30,12 @@ func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 		err = Validate(*dirPtr, *filePtr, multipleFiles)
 	}
 	return *dirPtr, *filePtr, multipleFiles, *jsonOutPtr, *xmlOutPtr, *ymlOutPtr, isHelp, err
+}
+
+func normalize() {
+	if len(*dirPtr) == 0 && len(*filePtr) == 0 && len(*filesPtr) == 0 {
+		*dirPtr = "./"
+	}
 }
 
 func eraseExt(name string) string {
