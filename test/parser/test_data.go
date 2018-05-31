@@ -82,16 +82,39 @@ var (
 	}
 
 	splitFileTestData = []struct {
-		input string
+		input    string
 		expected []string
-	} {
+	}{
 		{
 			"#include<iostream>\nvoid main()\n{\n\tstd::cout << \"Hello, World!\";\n}\n",
-			[]string {"#include<iostream>", "void main()", "{", "\tstd::cout << \"Hello, World!\";", "}", ""},
+			[]string{"#include<iostream>", "void main()", "{", "\tstd::cout << \"Hello, World!\";", "}", ""},
 		},
 		{
 			"if __name__ == '__main__':\n\tprint('Hello, World!')",
 			[]string{"if __name__ == '__main__':", "\tprint('Hello, World!')"},
 		},
+	}
+
+	parseLineTestData = []struct {
+		line     string
+		sc       string
+		mc       string
+		expected parser.Enum
+	}{
+		{"", "#", "#", parser.IsBlank},
+		{"// This is commented line", "//", "/*", parser.IsSingleComment},
+		{"/* This is single comment line */", "//", "/*", parser.IsMultiComment},
+		{"/* This is multi comment line", "//", "/*", parser.IsMultiComment},
+		{"def main():", "#", "\"\"\"", parser.IsCode},
+	}
+
+	parseMultiLineCommentTestData = []struct {
+		lines      []string
+		endComment string
+		expected   int
+	}{
+		{[]string{"/* Hello,", "World!", "Comment */", "func main() {"}, "*/", 3},
+		{[]string{"/* Hello World Comment */", "func main() {"}, "*/", 1},
+		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 1},
 	}
 )

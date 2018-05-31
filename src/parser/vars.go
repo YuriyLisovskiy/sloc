@@ -3,10 +3,10 @@ package parser
 type Enum int
 
 const (
-	isSingleComment Enum = iota
-	isMultiComment  Enum = iota
-	isBlank         Enum = iota
-	isCode          Enum = iota
+	IsSingleComment Enum = iota
+	IsMultiComment  Enum = iota
+	IsBlank         Enum = iota
+	IsCode          Enum = iota
 	isDir           Enum = iota
 	isRegular       Enum = iota
 	emptyString            = ""

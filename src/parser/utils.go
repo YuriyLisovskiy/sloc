@@ -68,7 +68,7 @@ func SplitFile(content string) []string {
 	return strings.Split(content, "\n")
 }
 
-func ReadFile(path string) (string, error) {
+func readFile(path string) (string, error) {
 	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		return "", err
@@ -105,20 +105,4 @@ func pathInfo(path string) Enum {
 		return isDir
 	}
 	return isRegular
-}
-
-func PrintStatus(current, max int) {
-	barWidth := 50
-	progress := (current * barWidth) / max
-	print("Progress: [")
-	for i := 0; i < barWidth; i++ {
-		if i < progress {
-			print("#")
-		} else if i == progress {
-			print(">")
-		} else {
-			print(" ")
-		}
-	}
-	print("]", progress * 2, "%\r")
 }

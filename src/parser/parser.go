@@ -11,16 +11,16 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 	if len(ln) > 0 {
 		if singleComment != emptyString || multiComment != emptyString {
 			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
-				return isSingleComment
+				return IsSingleComment
 			}
 			if len(ln) >= multiCLength && ln[:multiCLength] == multiComment {
-				return isMultiComment
+				return IsMultiComment
 			}
 		}
 	} else {
-		return isBlank
+		return IsBlank
 	}
-	return isCode
+	return IsCode
 }
 
 func ParseMultiLineComment(lines []string, endComment string) (int) {
@@ -34,13 +34,13 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 	return index
 }
 
-func ParseFile(file string) (string, Lang, error) {
+func parseFile(file string) (string, Lang, error) {
 	ext := NormalizeLang(GetExt(file))
 	if !ExtIsRecognized(ext, availableExtensions) {
 		return "", Lang{}, errors.New("unrecognized file")
 	}
 	langData := languageData[ext]
-	content, err := ReadFile(file)
+	content, err := readFile(file)
 	if err != nil {
 		return "", Lang{}, err
 	}
@@ -50,11 +50,11 @@ func ParseFile(file string) (string, Lang, error) {
 	for i := 0; i < len(lines); i++ {
 		lineType := ParseLine(lines[i], langData.SingleLineComment.Start, langData.MultiLineComment.Start)
 		switch lineType {
-		case isBlank:
+		case IsBlank:
 			blankLines += 1
-		case isSingleComment:
+		case IsSingleComment:
 			commentLines += 1
-		case isMultiComment:
+		case IsMultiComment:
 			newIndex := ParseMultiLineComment(lines[i:], langData.MultiLineComment.End)
 			commentLines += newIndex
 			i += newIndex
@@ -74,7 +74,7 @@ func ParseFile(file string) (string, Lang, error) {
 func Parse(files []string) ([]Lang, Lang) {
 	langMap, total := make(map[string]Lang), Lang{Name: "Total"}
 	for _, file := range files {
-		key, val, err := ParseFile(file)
+		key, val, err := parseFile(file)
 		if err == nil {
 			total = ConcatLangs(total, val)
 			if _, ok := langMap[key]; ok {
