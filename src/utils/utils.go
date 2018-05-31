@@ -9,7 +9,7 @@ import (
 )
 
 func GetTemplates(langs []parser.Lang) (string, string, string) {
-	indent := FindIndent(langs)
+	indent := FindIndentLen(langs)
 	header := fmt.Sprintf(GetFormatTemplate(Itos(indent), "s")+"\n", "Language", "Files", "Lines", "Blank", "Comments", "Code", )
 	line := strings.Join(make([]string, len(header)+1), "-") + "\n"
 	return line, line + header + line, GetFormatTemplate(Itos(indent), "d") + "\n"
@@ -51,7 +51,7 @@ func FindFieldWithMaxLen(lang parser.Lang) int {
 	)
 }
 
-func FindIndent(langs []parser.Lang) int {
+func FindIndentLen(langs []parser.Lang) int {
 	max := 0
 	for _, lang := range langs {
 		newMax := FindFieldWithMaxLen(lang)
