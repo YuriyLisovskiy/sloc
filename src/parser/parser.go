@@ -1,11 +1,11 @@
 package parser
 
 import (
+	"log"
+	"fmt"
+	"errors"
 	"strings"
 	"io/ioutil"
-	"log"
-	"errors"
-	"fmt"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
@@ -39,26 +39,28 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 	return index
 }
 
-func ParseMultipleFiles(files []string) ([]models.Lang, models.Lang) {
-	langMap, total := make(map[string]models.Lang), models.Lang{Name: "Total"}
+func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
+	langMap, total := make(map[string]*models.Lang), models.Lang{Name: "Total"}
+	var subTotal models.Lang
 	for _, file := range files {
-		ext := NormalizeLang(GetExt(file))
-		if ExtIsRecognized(ext, availableExtensions) {
-			val, err := parseSingleFile(file, ext)
-			if err == nil {
-				total = utils.ConcatLangs(total, val)
-				if _, ok := langMap[ext]; ok {
-					val = utils.ConcatLangs(langMap[ext], val)
+		if utils.IsDirectory(file) {
+			_, subTotal = ParseDirectory(file, langMap)
+			total = utils.ConcatLangs(total, subTotal)
+		} else if utils.IsFile(file) {
+			ext := NormalizeLang(GetExt(file))
+			if ExtIsRecognized(ext, availableExtensions) {
+				val, err := parseSingleFile(file, ext)
+				if err == nil {
+					total = utils.ConcatLangs(total, val)
+					if _, ok := langMap[ext]; ok {
+						val = utils.ConcatLangs(*langMap[ext], val)
+					}
+					langMap[ext] = &val
 				}
-				langMap[ext] = val
 			}
 		}
 	}
-	var result []models.Lang
-	for _, value := range langMap {
-		result = append(result, value)
-	}
-	return result, total
+	return utils.MapToArray(langMap), total
 }
 
 func ParseFile(file string) (models.Lang, error) {
@@ -74,7 +76,7 @@ func ParseFile(file string) (models.Lang, error) {
 
 func parseSingleFile(file, ext string) (models.Lang, error) {
 	langData := languageData[ext]
-	content, err := readFile(file)
+	content, err := utils.ReadFile(file)
 	if err != nil {
 		return models.Lang{}, err
 	}
@@ -105,7 +107,7 @@ func parseSingleFile(file, ext string) (models.Lang, error) {
 	return result, nil
 }
 
-func ParseDir(path string, langMap map[string]*models.Lang) ([]models.Lang, models.Lang) {
+func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang, models.Lang) {
 	if path[len(path)-1] != '/' {
 		path += "/"
 	}
@@ -121,9 +123,9 @@ func ParseDir(path string, langMap map[string]*models.Lang) ([]models.Lang, mode
 	for _, pathData := range readResult {
 		pathName := pathData.Name()
 		if utils.IsDirectory(path + pathName + "/") {
-			_, subTotal = ParseDir(path+pathName+"/", langMap)
+			_, subTotal = ParseDirectory(path+pathName+"/", langMap)
 			total = utils.ConcatLangs(total, subTotal)
-		} else if utils.IsFile(path + pathName + "/") {
+		} else if utils.IsFile(path + pathName) {
 			ext := NormalizeLang(GetExt(pathName))
 			if ExtIsRecognized(ext, availableExtensions) {
 				val, err := parseSingleFile(path+pathName, ext)
@@ -136,11 +138,6 @@ func ParseDir(path string, langMap map[string]*models.Lang) ([]models.Lang, mode
 				}
 			}
 		}
-	//	switch pathInfo(path + pathName + "/") {
-	//	case isDir:
-	//	case isRegular:
-
-	//	}
 	}
-	return mapToArray(langMap), total
+	return utils.MapToArray(langMap), total
 }

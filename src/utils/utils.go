@@ -7,6 +7,7 @@ import (
 	"errors"
 	"strings"
 	"strconv"
+	"io/ioutil"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
@@ -115,4 +116,20 @@ func ConcatLangs(current, lang models.Lang) models.Lang {
 		LinesCount:        current.LinesCount + lang.LinesCount,
 		FilesCount:        current.FilesCount + lang.FilesCount,
 	}
+}
+
+func ReadFile(path string) (string, error) {
+	bytes, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	return string(bytes), nil
+}
+
+func MapToArray(langMap map[string]*models.Lang) []models.Lang {
+	var result []models.Lang
+	for _, value := range langMap {
+		result = append(result, *value)
+	}
+	return result
 }

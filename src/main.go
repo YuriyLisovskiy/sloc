@@ -15,7 +15,7 @@ func main() {
 			var result []models.Lang
 			var total *models.Lang
 			if dir != "" {
-				res, newTotal := parser.ParseDir(dir, nil)
+				res, newTotal := parser.ParseDirectory(dir, nil)
 				result = res
 				total = &newTotal
 			} else if file != "" {
@@ -24,7 +24,7 @@ func main() {
 					result = []models.Lang{resFile}
 				}
 			} else if len(multipleFiles) > 0 {
-				res, newTotal := parser.ParseMultipleFiles(multipleFiles)
+				res, newTotal := parser.ParseMultiple(multipleFiles)
 				result = res
 				total = &newTotal
 			}

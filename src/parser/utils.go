@@ -1,10 +1,6 @@
 package parser
 
-import (
-	"strings"
-	"io/ioutil"
-	"github.com/YuriyLisovskiy/sloc/src/models"
-)
+import "strings"
 
 func NormalizeLang(ext string) string {
 	switch ext {
@@ -54,20 +50,4 @@ func GetFileNameFromPath(path string) string {
 
 func SplitFile(content string) []string {
 	return strings.Split(content, "\n")
-}
-
-func readFile(path string) (string, error) {
-	bytes, err := ioutil.ReadFile(path)
-	if err != nil {
-		return "", err
-	}
-	return string(bytes), nil
-}
-
-func mapToArray(langMap map[string]*models.Lang) []models.Lang {
-	var result []models.Lang
-	for _, value := range langMap {
-		result = append(result, *value)
-	}
-	return result
 }
