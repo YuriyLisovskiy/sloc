@@ -108,11 +108,17 @@ Also You can save output to a file:
 * C++
 * C#
 * C/C++ Header
+* F#
 * Go
+* Groovy
+* Haskell
 * Html
 * Java
 * JavaScript
 * Json
+* Kotlin
+* Makefile
+* Markdown
 * Plain text
 * Python
 * Ruby
