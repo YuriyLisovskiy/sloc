@@ -75,9 +75,9 @@ $ ./sloc -f src/main.go
  Total                  1          46           3           0          43
 
 ```
-Or multiple files:
+Or multiple files and(or) folders:
 ```
-$ ./sloc -m "src/main.go src/parser/models.go"
+$ ./sloc -m "src/main.go src/parser/"
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
