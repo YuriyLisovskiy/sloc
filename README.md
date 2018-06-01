@@ -119,9 +119,17 @@ Also You can save output to a file:
 * Kotlin
 * Makefile
 * Markdown
+* Objective-C/C++
+* Pascal
+* Perl
+* PHP
 * Plain text
 * Python
+* R
 * Ruby
+* Sass
+* SQL
+* Swift
 * Xml
 * Yaml
 ## Author
