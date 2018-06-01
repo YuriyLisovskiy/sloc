@@ -12,15 +12,27 @@ func NormalizeLang(ext string) string {
 		ext = "html"
 	case "yaml":
 		ext = "yml"
+	case "gvy", "gy", "gsh":
+		ext = "groovy"
+	case "fsi", "fsx", "fsscript":
+		ext = "fs"
+	case "lhs":
+		ext = "hs"
+	case "kts":
+		ext = "kt"
+	case "makefile", "MAKEFILE":
+		ext = "Makefile"
+	case "markdown", "mdown", "mkdn", "mkd", "mdwn", "mdtxt", "mdtext", "text", "Rmd":
+		ext = "md"
 	}
 	return ext
 }
 
 func GetExt(fileName string) string {
 	arr := strings.Split(GetFileNameFromPath(fileName), ".")
-	res := ""
+	res := fileName
 	if len(arr) > 0 {
-		return arr[len(arr)-1]
+		res = arr[len(arr)-1]
 	}
 	return res
 }
