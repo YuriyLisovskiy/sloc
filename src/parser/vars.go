@@ -13,6 +13,15 @@ const (
 )
 
 var (
+	emptyComment = models.Comment{emptyString, emptyString}
+	cLikeSComment = models.Comment{"//", "\n"}
+	cLikeMComment = models.Comment{"/*", "*/"}
+	pyLikeSComment = models.Comment{"#", "\n"}
+	xmlLikeComment = models.Comment{"<!--", "-->"}
+	sqlLikeSComment = models.Comment{"--", "\n"}
+)
+
+var (
 	availableExtensions = []string{
 		"c",
 		"cpp",
@@ -27,8 +36,9 @@ var (
 		"js",
 		"json",
 		"kt",
-		"Makefile",
+		"makefile",
 		"md",
+		"m",
 		"py",
 		"rb",
 		"txt",
@@ -38,103 +48,143 @@ var (
 	languageData = map[string]models.AvailableLang{
 		"c": {
 			"C",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"cpp": {
 			"C++",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"cs": {
 			"C#",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"ccpph": {
 			"C/C++ Header",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"fs": {
 			"F#",
-			models.Comment{"//", "\n"},
+			cLikeSComment,
 			models.Comment{"(*", "*)"},
 		},
 		"go": {
 			"Go",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"groovy": {
 			"Groovy",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"hs": {
 			"Haskell",
-			models.Comment{"--", "\n"},
+			sqlLikeSComment,
 			models.Comment{"{-", "-}"},
 		},
 		"html": {
 			"Html",
-			models.Comment{"<!--", "-->"},
-			models.Comment{"<!--", "-->"},
+			xmlLikeComment,
+			xmlLikeComment,
 		},
 		"java": {
 			"Java",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"js": {
 			"JavaScript",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"json": {
 			"Json",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"kt": {
 			"Kotlin",
-			models.Comment{"//", "\n"},
-			models.Comment{"/*", "*/"},
+			cLikeSComment,
+			cLikeMComment,
 		},
-		"Makefile": {
+		"makefile": {
 			"Makefile",
-			models.Comment{"#", "\n"},
-			models.Comment{emptyString, emptyString},
+			pyLikeSComment,
+			emptyComment,
 		},
 		"md": {
 			"Markdown",
 			models.Comment{"[//]: # ", "\n"},
-			models.Comment{"<!--", "-->"},
+			xmlLikeComment,
+		},
+		"m": {
+			"Objective-C",
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"txt": {
 			"Plain text",
-			models.Comment{emptyString, emptyString},
-			models.Comment{emptyString, emptyString},
+			emptyComment,
+			emptyComment,
+		},
+		"pas": {
+			"Pascal",
+			models.Comment{"{", "}"},
+			models.Comment{"{*", "*}"},
+		},
+		"pl": {
+			"Perl",
+			pyLikeSComment,
+			models.Comment{"=begin", "=cut"},
+		},
+		"php": {
+			"PHP",
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"py": {
 			"Python",
-			models.Comment{"#", "\n"},
+			pyLikeSComment,
 			models.Comment{"\"\"\"", "\"\"\""},
+		},
+		"r": {
+			"R",
+			pyLikeSComment,
+			emptyComment,
 		},
 		"rb": {
 			"Ruby",
-			models.Comment{"#", "\n"},
+			pyLikeSComment,
 			models.Comment{"=begin", "=end"},
+		},
+		"sass": {
+			"Sass",
+			cLikeSComment,
+			cLikeMComment,
+		},
+		"sql": {
+			"SQL",
+			sqlLikeSComment,
+			cLikeMComment,
+		},
+		"swift": {
+			"Swift",
+			cLikeSComment,
+			cLikeMComment,
 		},
 		"xml": {
 			"Xml",
-			models.Comment{"<!--", "-->"},
-			models.Comment{"<!--", "-->"},
+			xmlLikeComment,
+			xmlLikeComment,
 		},
 		"yml": {
 			"Yaml",
-			models.Comment{"#", "\n"},
-			models.Comment{"#", "\n"},
+			pyLikeSComment,
+			pyLikeSComment,
 		},
 	}
 )

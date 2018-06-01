@@ -3,10 +3,11 @@ package parser
 import "strings"
 
 func NormalizeLang(ext string) string {
+	ext = strings.ToLower(ext)
 	switch ext {
 	case "h", "hpp", "hh", "hxx":
 		ext = "ccpph"
-	case "cc", "cxx":
+	case "cc", "cxx", "c++", "cp":
 		ext = "cpp"
 	case "htm", "xhtml":
 		ext = "html"
@@ -20,10 +21,20 @@ func NormalizeLang(ext string) string {
 		ext = "hs"
 	case "kts":
 		ext = "kt"
-	case "makefile", "MAKEFILE":
-		ext = "Makefile"
-	case "markdown", "mdown", "mkdn", "mkd", "mdwn", "mdtxt", "mdtext", "text", "Rmd":
+	case "markdown", "mdown", "mkdn", "mkd", "mdwn", "mdtxt", "mdtext", "text", "rmd":
 		ext = "md"
+	case "mm":
+		ext = "m"
+	case "pp", "inc":
+		ext = "pas"
+	case "pm", "t", "pod":
+		ext = "pl"
+	case "phtml", "php3", "php4", "php5", "php7", "phps", "php-s":
+		ext = "php"
+	case "rdata", "rds", "rda":
+		ext = "r"
+	case "scss":
+		ext = "sass"
 	}
 	return ext
 }
