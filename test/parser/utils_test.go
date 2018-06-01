@@ -2,6 +2,7 @@ package parser
 
 import (
 	"testing"
+	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/parser"
 )
 
@@ -43,7 +44,7 @@ func TestGetFileNameFromPath(test *testing.T) {
 
 func TestConcatLangs(test *testing.T) {
 	for _, td := range concatLangsTestData {
-		actual := parser.ConcatLangs(td.current, td.lang)
+		actual := utils.ConcatLangs(td.current, td.lang)
 		if actual != td.expected {
 			test.Errorf("parser.TestConcatLangs: expected %s, actual %s", td.expected.ToString(), actual.ToString())
 		}

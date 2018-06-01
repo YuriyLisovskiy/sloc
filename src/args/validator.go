@@ -1,26 +1,10 @@
 package args
 
 import (
-	"os"
 	"fmt"
 	"errors"
+	"github.com/YuriyLisovskiy/sloc/src/utils"
 )
-
-func isDir(path string) bool {
-	info, err := os.Stat(path)
-	if err != nil {
-		return false
-	}
-	return info.Mode().IsDir()
-}
-
-func isFile(path string) bool {
-	info, err := os.Stat(path)
-	if err != nil {
-		return true
-	}
-	return info.Mode().IsRegular()
-}
 
 func Validate(dir, file string, files []string) error {
 	err := ValidateParams(dir, file, files)
@@ -49,10 +33,10 @@ func ValidateParams(dir, file string, files []string) error {
 }
 
 func validatePath(dir, file string) error {
-	if len(dir) > 0 && !isDir(dir) {
+	if len(dir) > 0 && !utils.IsDirectory(dir) {
 		return errors.New(fmt.Sprintf(err + " is not a directory", dir))
 	}
-	if len(file) > 0 && !isFile(file) {
+	if len(file) > 0 && !utils.IsFile(file) {
 		return errors.New(fmt.Sprintf(err + " is not a file", file))
 	}
 	return nil

@@ -1,41 +1,49 @@
 package main
 
 import (
-	"github.com/YuriyLisovskiy/sloc/src/args"
-	"github.com/YuriyLisovskiy/sloc/src/utils"
-	"github.com/YuriyLisovskiy/sloc/src/parser"
 	"fmt"
+	"github.com/YuriyLisovskiy/sloc/src/out"
+	"github.com/YuriyLisovskiy/sloc/src/args"
+	"github.com/YuriyLisovskiy/sloc/src/parser"
+	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
 func main() {
 	dir, file, multipleFiles, jsonOut, xmlOut, ymlOut, help, err := args.Parse()
 	if err == nil {
 		if !help {
-			var res []parser.Lang
-			var total parser.Lang
+			var result []models.Lang
+			var total *models.Lang
 			if dir != "" {
-				res, total = parser.Parse(parser.ReadDir(dir))
+				res, newTotal := parser.ParseDir(dir, nil)
+				result = res
+				total = &newTotal
 			} else if file != "" {
-				res, total = parser.Parse([]string{file})
+				resFile, err := parser.ParseFile(file)
+				if err == nil {
+					result = []models.Lang{resFile}
+				}
 			} else if len(multipleFiles) > 0 {
-				res, total = parser.Parse(multipleFiles)
+				res, newTotal := parser.ParseMultipleFiles(multipleFiles)
+				result = res
+				total = &newTotal
 			}
 			if jsonOut {
-				if err = utils.OutputToJson(res, total); err != nil {
+				if err = out.ToJson(result, total); err != nil {
 					fmt.Println(err.Error())
 				}
 			}
 			if xmlOut {
-				if utils.OutputToXml(res, total); err != nil {
+				if out.ToXml(result, total); err != nil {
 					fmt.Println(err.Error())
 				}
 			}
 			if ymlOut {
-				if utils.OutputToYaml(res, total); err != nil {
+				if out.ToYaml(result, total); err != nil {
 					fmt.Println(err.Error())
 				}
 			}
-			if utils.OutputToStd(res, total); err != nil {
+			if out.ToStd(result, total); err != nil {
 				fmt.Println(err.Error())
 			}
 		}

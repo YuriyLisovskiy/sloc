@@ -1,6 +1,9 @@
 package parser
 
-import "github.com/YuriyLisovskiy/sloc/src/parser"
+import (
+	"github.com/YuriyLisovskiy/sloc/src/parser"
+	"github.com/YuriyLisovskiy/sloc/src/models"
+)
 
 var (
 	availableExts = []string{"txt", "go", "cpp", "sh"}
@@ -49,12 +52,12 @@ var (
 	}
 
 	concatLangsTestData = []struct {
-		current  parser.Lang
-		lang     parser.Lang
-		expected parser.Lang
+		current  models.Lang
+		lang     models.Lang
+		expected models.Lang
 	}{
 		{
-			parser.Lang{
+			models.Lang{
 				Name:              "Current",
 				FilesCount:        10,
 				CodeLinesCount:    100,
@@ -62,7 +65,7 @@ var (
 				BlankLinesCount:   1,
 				LinesCount:        234,
 			},
-			parser.Lang{
+			models.Lang{
 				Name:              "Some Lang",
 				FilesCount:        111,
 				CodeLinesCount:    2300,
@@ -70,7 +73,7 @@ var (
 				BlankLinesCount:   1233,
 				LinesCount:        4567,
 			},
-			parser.Lang{
+			models.Lang{
 				Name:              "Current",
 				FilesCount:        121,
 				CodeLinesCount:    2400,

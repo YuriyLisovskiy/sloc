@@ -1,5 +1,7 @@
 package parser
 
+import "github.com/YuriyLisovskiy/sloc/src/models"
+
 type Enum int
 
 const (
@@ -7,8 +9,6 @@ const (
 	IsMultiComment  Enum = iota
 	IsBlank         Enum = iota
 	IsCode          Enum = iota
-	isDir           Enum = iota
-	isRegular       Enum = iota
 	emptyString            = ""
 )
 
@@ -16,76 +16,76 @@ var (
 	availableExtensions = []string{
 		"ccpph", "c", "cpp", "go", "java", "rb", "py", "js", "cs", "xml", "html", "json", "yml", "txt",
 	}
-	languageData = map[string]AvailableLang{
+	languageData = map[string]models.AvailableLang{
 		"ccpph": {
 			"C/C++ Header",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"c": {
 			"C",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"cpp": {
 			"C++",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"go": {
 			"Go",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"java": {
 			"Java",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"rb": {
 			"Ruby",
-			Comment{"#", "\n"},
-			Comment{"=begin", "=end"},
+			models.Comment{"#", "\n"},
+			models.Comment{"=begin", "=end"},
 		},
 		"py": {
 			"Python",
-			Comment{"#", "\n"},
-			Comment{"\"\"\"", "\"\"\""},
+			models.Comment{"#", "\n"},
+			models.Comment{"\"\"\"", "\"\"\""},
 		},
 		"js": {
 			"JavaScript",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"cs": {
 			"C#",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"xml": {
 			"Xml",
-			Comment{"<!--", "-->"},
-			Comment{"<!--", "-->"},
+			models.Comment{"<!--", "-->"},
+			models.Comment{"<!--", "-->"},
 		},
 		"html": {
 			"Html",
-			Comment{"<!--", "-->"},
-			Comment{"<!--", "-->"},
+			models.Comment{"<!--", "-->"},
+			models.Comment{"<!--", "-->"},
 		},
 		"json": {
 			"Json",
-			Comment{"//", "\n"},
-			Comment{"/*", "*/"},
+			models.Comment{"//", "\n"},
+			models.Comment{"/*", "*/"},
 		},
 		"yml": {
 			"Yaml",
-			Comment{"#", "\n"},
-			Comment{"#", "\n"},
+			models.Comment{"#", "\n"},
+			models.Comment{"#", "\n"},
 		},
 		"txt": {
 			"Plain text",
-			Comment{emptyString, emptyString},
-			Comment{emptyString, emptyString},
+			models.Comment{emptyString, emptyString},
+			models.Comment{emptyString, emptyString},
 		},
 	}
 )

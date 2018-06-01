@@ -1,16 +1,18 @@
 package utils
 
-import "github.com/YuriyLisovskiy/sloc/src/parser"
+import (
+	"github.com/YuriyLisovskiy/sloc/src/models"
+)
 
 var (
 	getTemplatesTestData = []struct {
-		langs          []parser.Lang
+		langs          []models.Lang
 		expectedLine   string
 		expectedHeader string
 		expectedFormat string
 	}{
 		{
-			[]parser.Lang{
+			[]models.Lang{
 				{
 					Name:              "Name",
 					CodeLinesCount:    10875,
@@ -68,11 +70,11 @@ var (
 	}
 
 	findFieldWithMaxLenTestData = []struct {
-		input    parser.Lang
+		input    models.Lang
 		expected int
 	}{
 		{
-			parser.Lang{
+			models.Lang{
 				Name:              "Name",
 				CodeLinesCount:    10875,
 				CommentLinesCount: 13434,
@@ -83,7 +85,7 @@ var (
 			12,
 		},
 		{
-			parser.Lang{
+			models.Lang{
 				Name:              "Some interesting language",
 				CodeLinesCount:    10875,
 				CommentLinesCount: 13434,
@@ -94,7 +96,7 @@ var (
 			26,
 		},
 		{
-			parser.Lang{
+			models.Lang{
 				Name:              "Some language",
 				CodeLinesCount:    31083456789075,
 				CommentLinesCount: 13434,
@@ -107,11 +109,11 @@ var (
 	}
 
 	findIndentLenTestData = []struct {
-		input    []parser.Lang
+		input    []models.Lang
 		expected int
 	}{
 		{
-			[]parser.Lang{
+			[]models.Lang{
 				{
 					Name:              "Name",
 					CodeLinesCount:    10875,
@@ -140,7 +142,7 @@ var (
 			26,
 		},
 		{
-			[]parser.Lang{
+			[]models.Lang{
 				{
 					Name:              "Name",
 					CodeLinesCount:    10875,
@@ -171,12 +173,12 @@ var (
 	}
 
 	appendLangDataTestData = []struct {
-		lang parser.Lang
+		lang models.Lang
 		format string
 		expected string
 	}{
 		{
-			parser.Lang{
+			models.Lang{
 				Name:              "Name",
 				CodeLinesCount:    10875,
 				CommentLinesCount: 13434,

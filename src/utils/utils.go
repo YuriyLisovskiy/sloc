@@ -7,10 +7,10 @@ import (
 	"errors"
 	"strings"
 	"strconv"
-	"github.com/YuriyLisovskiy/sloc/src/parser"
+	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
-func GetTemplates(langs []parser.Lang) (string, string, string) {
+func GetTemplates(langs []models.Lang) (string, string, string) {
 	indent := FindIndentLen(langs)
 	header := fmt.Sprintf(GetFormatTemplate(Itos(indent), "s")+"\n", "Language", "Files", "Lines", "Blank", "Comments", "Code", )
 	line := strings.Join(make([]string, len(header)+1), "-") + "\n"
@@ -38,7 +38,7 @@ func FindMax(first, second int) int {
 	return int(math.Max(float64(first), float64(second)))
 }
 
-func FindFieldWithMaxLen(lang parser.Lang) int {
+func FindFieldWithMaxLen(lang models.Lang) int {
 	return FindMax(
 		len(lang.Name)+1, FindMax(
 			Itol(lang.FilesCount), FindMax(
@@ -53,7 +53,7 @@ func FindFieldWithMaxLen(lang parser.Lang) int {
 	)
 }
 
-func FindIndentLen(langs []parser.Lang) int {
+func FindIndentLen(langs []models.Lang) int {
 	max := 0
 	for _, lang := range langs {
 		newMax := FindFieldWithMaxLen(lang)
@@ -64,7 +64,7 @@ func FindIndentLen(langs []parser.Lang) int {
 	return max
 }
 
-func AppendLangData(lang parser.Lang, formatString string) string {
+func AppendLangData(lang models.Lang, formatString string) string {
 	return fmt.Sprintf(
 		formatString,
 		lang.Name,
@@ -76,7 +76,7 @@ func AppendLangData(lang parser.Lang, formatString string) string {
 	)
 }
 
-func writeToFile(path, data string) error {
+func WriteToFile(path, data string) error {
 	file, err := os.Create(path)
 	if err != nil {
 		return errors.New(fmt.Sprintf("cannot create file '%s': %s", path, err.Error()))
@@ -86,6 +86,33 @@ func writeToFile(path, data string) error {
 	return nil
 }
 
-func createDir(path string) error {
+func CreateDir(path string) error {
 	return os.MkdirAll(path,0777)
+}
+
+func IsDirectory(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return false
+	}
+	return info.Mode().IsDir()
+}
+
+func IsFile(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		return true
+	}
+	return info.Mode().IsRegular()
+}
+
+func ConcatLangs(current, lang models.Lang) models.Lang {
+	return models.Lang{
+		Name:              current.Name,
+		CodeLinesCount:    current.CodeLinesCount + lang.CodeLinesCount,
+		CommentLinesCount: current.CommentLinesCount + lang.CommentLinesCount,
+		BlankLinesCount:   current.BlankLinesCount + lang.BlankLinesCount,
+		LinesCount:        current.LinesCount + lang.LinesCount,
+		FilesCount:        current.FilesCount + lang.FilesCount,
+	}
 }

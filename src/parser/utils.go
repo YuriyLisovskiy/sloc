@@ -1,10 +1,9 @@
 package parser
 
 import (
-	"os"
-	"log"
 	"strings"
 	"io/ioutil"
+	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
 func NormalizeLang(ext string) string {
@@ -53,17 +52,6 @@ func GetFileNameFromPath(path string) string {
 	return path[index+1:]
 }
 
-func ConcatLangs(current, lang Lang) Lang {
-	return Lang{
-		Name:              current.Name,
-		CodeLinesCount:    current.CodeLinesCount + lang.CodeLinesCount,
-		CommentLinesCount: current.CommentLinesCount + lang.CommentLinesCount,
-		BlankLinesCount:   current.BlankLinesCount + lang.BlankLinesCount,
-		LinesCount:        current.LinesCount + lang.LinesCount,
-		FilesCount:        current.FilesCount + lang.FilesCount,
-	}
-}
-
 func SplitFile(content string) []string {
 	return strings.Split(content, "\n")
 }
@@ -76,33 +64,10 @@ func readFile(path string) (string, error) {
 	return string(bytes), nil
 }
 
-func ReadDir(path string) []string {
-	readResult, err := ioutil.ReadDir(path)
-	if err != nil {
-		log.Fatal(err)
+func mapToArray(langMap map[string]*models.Lang) []models.Lang {
+	var result []models.Lang
+	for _, value := range langMap {
+		result = append(result, *value)
 	}
-	if path[len(path)-1] != '/' {
-		path += "/"
-	}
-	var files, dirs []string
-	for _, pathData := range readResult {
-		pathName := pathData.Name()
-		switch pathInfo(path + pathName + "/") {
-		case isDir:
-			dirs = append(dirs, path+pathName+"/")
-		case isRegular:
-			files = append(files, path+pathName)
-		}
-	}
-	for _, dir := range dirs {
-		files = append(files, ReadDir(dir)...)
-	}
-	return files
-}
-
-func pathInfo(path string) Enum {
-	if _, err := os.Stat(path); err == nil {
-		return isDir
-	}
-	return isRegular
+	return result
 }
