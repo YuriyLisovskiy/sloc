@@ -113,6 +113,6 @@ var (
 	}{
 		{[]string{"/* Hello,", "World!", "Comment */", "func main() {"}, "*/", 3},
 		{[]string{"/* Hello World Comment */", "func main() {"}, "*/", 1},
-		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 1},
+		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 0},
 	}
 )
