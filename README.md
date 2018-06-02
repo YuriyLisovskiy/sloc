@@ -86,6 +86,17 @@ $ ./sloc -m "src/main.go src/parser/"
  Total                  2          82           9           0          73
 
 ```
+You can exclude some file(s) and(or) folder(s):
+```
+$ ./sloc -d src/ -e "src/main.go src/out/output.go"
+--------------------------------------------------------------------------
+ Language           Files       Lines       Blank    Comments        Code
+--------------------------------------------------------------------------
+ Go                     9         742          63           0         679
+--------------------------------------------------------------------------
+ Total                  9         742          63           0         679
+
+```
 Read usage info:
 ```
 $ ./sloc -h
