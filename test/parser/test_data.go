@@ -6,10 +6,6 @@ import (
 )
 
 var (
-	availableExts = []string{"txt", "go", "cpp", "sh"}
-)
-
-var (
 	normalizeLangTestData = []struct {
 		input    string
 		expected string
@@ -32,13 +28,12 @@ var (
 
 	extIsRecognizedTestData = []struct {
 		ext       string
-		available []string
 		expected  bool
 	}{
-		{"txt", availableExts, true},
-		{"c", availableExts, false},
-		{"sh", availableExts, true},
-		{"hpp", availableExts, false},
+		{"txt", true},
+		{"c", true},
+		{"sass", true},
+		{"hpp", false},
 	}
 
 	getFileNameFromPathTestData = []struct {

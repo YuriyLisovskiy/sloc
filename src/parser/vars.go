@@ -9,182 +9,61 @@ const (
 	IsMultiComment  Enum = iota
 	IsBlank         Enum = iota
 	IsCode          Enum = iota
-	emptyString            = ""
+	emptyString          = ""
 )
 
 var (
-	emptyComment = models.Comment{emptyString, emptyString}
-	cLikeSComment = models.Comment{"//", "\n"}
-	cLikeMComment = models.Comment{"/*", "*/"}
-	pyLikeSComment = models.Comment{"#", "\n"}
-	xmlLikeComment = models.Comment{"<!--", "-->"}
-	sqlLikeSComment = models.Comment{"--", "\n"}
+	noComments    = models.Comment{emptyString, emptyString}
+	clangSComment = models.Comment{"//", "\n"}
+	clangMComment = models.Comment{"/*", "*/"}
+	shSComment    = models.Comment{"#", "\n"}
+	xmlComment    = models.Comment{"<!--", "-->"}
+	sqlSComment   = models.Comment{"--", "\n"}
+	agdaMComment  = models.Comment{"{-", "-}"}
+	aspSComment   = models.Comment{"'", "\n"}
 )
 
 var (
-	availableExtensions = []string{
-		"c",
-		"cpp",
-		"cs",
-		"ccpph",
-		"fs",
-		"go",
-		"groovy",
-		"hs",
-		"html",
-		"java",
-		"js",
-		"json",
-		"kt",
-		"makefile",
-		"md",
-		"m",
-		"py",
-		"rb",
-		"txt",
-		"xml",
-		"yml",
-	}
 	languageData = map[string]models.AvailableLang{
-		"c": {
-			"C",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"cpp": {
-			"C++",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"cs": {
-			"C#",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"ccpph": {
-			"C/C++ Header",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"fs": {
-			"F#",
-			cLikeSComment,
-			models.Comment{"(*", "*)"},
-		},
-		"go": {
-			"Go",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"groovy": {
-			"Groovy",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"hs": {
-			"Haskell",
-			sqlLikeSComment,
-			models.Comment{"{-", "-}"},
-		},
-		"html": {
-			"Html",
-			xmlLikeComment,
-			xmlLikeComment,
-		},
-		"java": {
-			"Java",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"js": {
-			"JavaScript",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"json": {
-			"Json",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"kt": {
-			"Kotlin",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"makefile": {
-			"Makefile",
-			pyLikeSComment,
-			emptyComment,
-		},
-		"md": {
-			"Markdown",
-			models.Comment{"[//]: # ", "\n"},
-			xmlLikeComment,
-		},
-		"m": {
-			"Objective-C",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"txt": {
-			"Plain text",
-			emptyComment,
-			emptyComment,
-		},
-		"pas": {
-			"Pascal",
-			models.Comment{"{", "}"},
-			models.Comment{"{*", "*}"},
-		},
-		"pl": {
-			"Perl",
-			pyLikeSComment,
-			models.Comment{"=begin", "=cut"},
-		},
-		"php": {
-			"PHP",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"py": {
-			"Python",
-			pyLikeSComment,
-			models.Comment{"\"\"\"", "\"\"\""},
-		},
-		"r": {
-			"R",
-			pyLikeSComment,
-			emptyComment,
-		},
-		"rb": {
-			"Ruby",
-			pyLikeSComment,
-			models.Comment{"=begin", "=end"},
-		},
-		"sass": {
-			"Sass",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"sql": {
-			"SQL",
-			sqlLikeSComment,
-			cLikeMComment,
-		},
-		"swift": {
-			"Swift",
-			cLikeSComment,
-			cLikeMComment,
-		},
-		"xml": {
-			"Xml",
-			xmlLikeComment,
-			xmlLikeComment,
-		},
-		"yml": {
-			"Yaml",
-			pyLikeSComment,
-			pyLikeSComment,
-		},
+		"as":       {"ActionScript", clangSComment, clangMComment},
+		"c":        {"C", clangSComment, clangMComment},
+		"cpp":      {"C++", clangSComment, clangMComment},
+		"cs":       {"C#", clangSComment, clangMComment},
+		"ccpph":    {"C/C++ Header", clangSComment, clangMComment},
+		"fs":       {"F#", clangSComment, models.Comment{"(*", "*)"}},
+		"go":       {"Go", clangSComment, clangMComment},
+		"groovy":   {"Groovy", clangSComment, clangMComment},
+		"hs":       {"Haskell", sqlSComment, agdaMComment},
+		"html":     {"Html", xmlComment, xmlComment},
+		"java":     {"Java", clangSComment, clangMComment},
+		"js":       {"JavaScript", clangSComment, clangMComment},
+		"json":     {"Json", clangSComment, clangMComment},
+		"kt":       {"Kotlin", clangSComment, clangMComment},
+		"makefile": {"Makefile", shSComment, noComments},
+		"md":       {"Markdown", models.Comment{"[//]: # ", "\n"}, xmlComment},
+		"m":        {"Objective-C", clangSComment, clangMComment},
+		"txt":      {"Plain text", noComments, noComments},
+		"pas":      {"Pascal", models.Comment{"{", "}"}, models.Comment{"{*", "*}"}},
+		"pl":       {"Perl", shSComment, models.Comment{"=begin", "=cut"}},
+		"php":      {"PHP", clangSComment, clangMComment},
+		"py":       {"Python", shSComment, models.Comment{"\"\"\"", "\"\"\""}},
+		"r":        {"R", shSComment, noComments},
+		"rb":       {"Ruby", shSComment, models.Comment{"=begin", "=end"}},
+		"sass":     {"Sass", clangSComment, clangMComment},
+		"sql":      {"SQL", sqlSComment, clangMComment},
+		"swift":    {"Swift", clangSComment, clangMComment},
+		"xml":      {"Xml", noComments, xmlComment},
+		"yml":      {"Yaml", shSComment, noComments},
+		"ads":      {"Ada", sqlSComment, noComments},
+		"agda":     {"Agda", sqlSComment, agdaMComment},
+		"asp":      {"ASP", aspSComment, xmlComment},
+		"aspx":     {"ASP.NET", aspSComment, xmlComment},
+		"asm":      {"Assembly", shSComment, clangMComment},
+		"in":       {"Autoconf", shSComment, noComments},
+		"awk":      {"Awk", shSComment, noComments},
+		"bat":      {"Batch", models.Comment{"REM", "\n"}, noComments},
+		"sh":       {"Bourne Shell", shSComment, noComments},
+		"csh":      {"C Shell", shSComment, noComments},
+		"coffee":   {"CoffeeScript", shSComment, models.Comment{"###", "###"}},
 	}
 )

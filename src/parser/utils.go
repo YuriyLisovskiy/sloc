@@ -38,6 +38,16 @@ func NormalizeLang(ext string) string {
 		ext = "r"
 	case "scss":
 		ext = "sass"
+	case "adb":
+		ext = "ads"
+	case "lagda":
+		ext = "agda"
+	case "cshtml", "vbhtml", "asax", "ascx", "ashx", "asmx", "axd", "dbml", "edmx", "resx", "svc":
+		ext = "aspx"
+	case "s":
+		ext = "asm"
+	case "btm", "cmd":
+		ext = "bat"
 	}
 	return ext
 }
@@ -51,9 +61,9 @@ func GetExt(fileName string) string {
 	return res
 }
 
-func ExtIsRecognized(ext string, available []string) bool {
-	for _, e := range available {
-		if e == ext {
+func ExtIsRecognized(ext string) bool {
+	for key := range languageData {
+		if key == ext {
 			return true
 		}
 	}

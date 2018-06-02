@@ -26,9 +26,9 @@ func TestGetExt(test *testing.T) {
 
 func TestExtIsRecognized(test *testing.T) {
 	for _, td := range extIsRecognizedTestData {
-		actual := parser.ExtIsRecognized(td.ext, td.available)
+		actual := parser.ExtIsRecognized(td.ext)
 		if actual != td.expected {
-			test.Errorf("parser.TestGetExt: expected %t, actual %t", td.expected, actual)
+			test.Errorf("parser.TestExtIsRecognized: expected %t, actual %t", td.expected, actual)
 		}
 	}
 }

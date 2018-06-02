@@ -12,13 +12,14 @@ import (
 
 func ParseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
-	singleCLength, multiCLength := len(singleComment), len(multiComment)
 	if len(ln) > 0 {
-		if singleComment != emptyString || multiComment != emptyString {
-			if len(ln) >= singleCLength && ln[:singleCLength] == singleComment {
+		if singleComment != emptyString {
+			if strings.HasPrefix(ln, singleComment) {
 				return IsSingleComment
 			}
-			if len(ln) >= multiCLength && ln[:multiCLength] == multiComment {
+		}
+		if multiComment != emptyString {
+			if strings.HasPrefix(ln, multiComment) {
 				return IsMultiComment
 			}
 		}
@@ -49,7 +50,7 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 				total = utils.ConcatLangs(total, subTotal)
 			} else if utils.IsFile(file) {
 				ext := NormalizeLang(GetExt(file))
-				if ExtIsRecognized(ext, availableExtensions) {
+				if ExtIsRecognized(ext) {
 					val, err := parseSingleFile(file, ext)
 					if err == nil {
 						total = utils.ConcatLangs(total, val)
@@ -68,7 +69,7 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 func ParseFile(file string) (models.Lang, error) {
 	if !IsExcluded(file) {
 		ext := NormalizeLang(GetExt(file))
-		if ExtIsRecognized(ext, availableExtensions) {
+		if ExtIsRecognized(ext) {
 			val, err := parseSingleFile(file, ext)
 			if err == nil {
 				return val, nil
@@ -98,7 +99,7 @@ func parseSingleFile(file, ext string) (models.Lang, error) {
 		case IsMultiComment:
 			newIndex := ParseMultiLineComment(lines[i:], langData.MultiLineComment.End)
 			commentLines += newIndex
-			i += newIndex
+			i += newIndex - 1
 		}
 	}
 	result := models.Lang{
@@ -135,7 +136,7 @@ func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang
 		} else if utils.IsFile(path + pathName) {
 			if !IsExcluded(path + pathName) {
 				ext := NormalizeLang(GetExt(pathName))
-				if ExtIsRecognized(ext, availableExtensions) {
+				if ExtIsRecognized(ext) {
 					val, err := parseSingleFile(path+pathName, ext)
 					if err == nil {
 						total = utils.ConcatLangs(total, val)
