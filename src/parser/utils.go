@@ -1,6 +1,9 @@
 package parser
 
-import "strings"
+import (
+	"strings"
+	"github.com/YuriyLisovskiy/sloc/src/args"
+)
 
 func NormalizeLang(ext string) string {
 	ext = strings.ToLower(ext)
@@ -73,4 +76,19 @@ func GetFileNameFromPath(path string) string {
 
 func SplitFile(content string) []string {
 	return strings.Split(content, "\n")
+}
+
+func IsExcluded(path string) bool {
+	for i, excluded := range args.ExcludeList {
+		if excluded == path {
+			switch i {
+			case len(args.ExcludeList) - 1:
+				args.ExcludeList = append(args.ExcludeList[:i], nil...)
+			default:
+				args.ExcludeList = append(args.ExcludeList[:i], args.ExcludeList[i+1:]...)
+			}
+			return true
+		}
+	}
+	return false
 }

@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
-	"github.com/YuriyLisovskiy/sloc/src/args"
 )
 
 func ParseLine(line, singleComment, multiComment string) (Enum) {
@@ -44,7 +43,7 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 	langMap, total := make(map[string]*models.Lang), models.Lang{Name: "Total"}
 	var subTotal models.Lang
 	for _, file := range files {
-		if !utils.StringInSlice(file, args.ExcludeList) {
+		if !IsExcluded(file) {
 			if utils.IsDirectory(file) {
 				_, subTotal = ParseDirectory(file, langMap)
 				total = utils.ConcatLangs(total, subTotal)
@@ -67,7 +66,7 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 }
 
 func ParseFile(file string) (models.Lang, error) {
-	if !utils.StringInSlice(file, args.ExcludeList) {
+	if !IsExcluded(file) {
 		ext := NormalizeLang(GetExt(file))
 		if ExtIsRecognized(ext, availableExtensions) {
 			val, err := parseSingleFile(file, ext)
@@ -129,12 +128,12 @@ func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang
 	for _, pathData := range readResult {
 		pathName := pathData.Name()
 		if utils.IsDirectory(path + pathName + "/") {
-			if !utils.StringInSlice(path + pathName + "/", args.ExcludeList) {
+			if !IsExcluded(path + pathName + "/") {
 				_, subTotal = ParseDirectory(path+pathName+"/", langMap)
 				total = utils.ConcatLangs(total, subTotal)
 			}
 		} else if utils.IsFile(path + pathName) {
-			if !utils.StringInSlice(path + pathName, args.ExcludeList) {
+			if !IsExcluded(path + pathName) {
 				ext := NormalizeLang(GetExt(pathName))
 				if ExtIsRecognized(ext, availableExtensions) {
 					val, err := parseSingleFile(path+pathName, ext)
