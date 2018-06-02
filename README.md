@@ -115,6 +115,18 @@ Also You can save output to a file:
 	* `$ ./sloc -y`
 	* `$ ./sloc -y -c path/to/result.yml`
 ### Supported languages
+* ActionScript
+* Ada
+* Agda
+* ASP
+* ASP.NET
+* Assembly
+* Autoconf
+* Awk
+* Batch
+* Bourne Shell
+* C Shell
+* CoffeeScript
 * C
 * C++
 * C#
