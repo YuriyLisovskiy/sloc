@@ -67,4 +67,9 @@ func parseOutPath() {
 
 func parseExclude() {
 	ExcludeList = strings.Split(*excludePtr, " ")
+	for i := 0; i < len(ExcludeList); i++ {
+		if !strings.HasPrefix(ExcludeList[i], "./") {
+			ExcludeList[i] = "./" + ExcludeList[i]
+		}
+	}
 }
