@@ -32,8 +32,11 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 func ParseMultiLineComment(lines []string, endComment string) (int) {
 	index := 1
 	for i, line := range lines {
-		if strings.Contains(line, endComment) {
+		if strings.HasSuffix(line, endComment) {
 			index += i
+			break
+		} else if strings.Contains(line, endComment) {
+			index += i - 1
 			break
 		}
 	}
