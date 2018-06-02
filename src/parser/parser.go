@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
+	"github.com/YuriyLisovskiy/sloc/src/args"
 )
 
 func ParseLine(line, singleComment, multiComment string) (Enum) {
@@ -43,19 +44,21 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 	langMap, total := make(map[string]*models.Lang), models.Lang{Name: "Total"}
 	var subTotal models.Lang
 	for _, file := range files {
-		if utils.IsDirectory(file) {
-			_, subTotal = ParseDirectory(file, langMap)
-			total = utils.ConcatLangs(total, subTotal)
-		} else if utils.IsFile(file) {
-			ext := NormalizeLang(GetExt(file))
-			if ExtIsRecognized(ext, availableExtensions) {
-				val, err := parseSingleFile(file, ext)
-				if err == nil {
-					total = utils.ConcatLangs(total, val)
-					if _, ok := langMap[ext]; ok {
-						val = utils.ConcatLangs(*langMap[ext], val)
+		if !utils.StringInSlice(file, args.ExcludeList) {
+			if utils.IsDirectory(file) {
+				_, subTotal = ParseDirectory(file, langMap)
+				total = utils.ConcatLangs(total, subTotal)
+			} else if utils.IsFile(file) {
+				ext := NormalizeLang(GetExt(file))
+				if ExtIsRecognized(ext, availableExtensions) {
+					val, err := parseSingleFile(file, ext)
+					if err == nil {
+						total = utils.ConcatLangs(total, val)
+						if _, ok := langMap[ext]; ok {
+							val = utils.ConcatLangs(*langMap[ext], val)
+						}
+						langMap[ext] = &val
 					}
-					langMap[ext] = &val
 				}
 			}
 		}
@@ -64,14 +67,17 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 }
 
 func ParseFile(file string) (models.Lang, error) {
-	ext := NormalizeLang(GetExt(file))
-	if ExtIsRecognized(ext, availableExtensions) {
-		val, err := parseSingleFile(file, ext)
-		if err == nil {
-			return val, nil
+	if !utils.StringInSlice(file, args.ExcludeList) {
+		ext := NormalizeLang(GetExt(file))
+		if ExtIsRecognized(ext, availableExtensions) {
+			val, err := parseSingleFile(file, ext)
+			if err == nil {
+				return val, nil
+			}
 		}
+		return models.Lang{}, errors.New(fmt.Sprintf("can't parse file '%s'", file))
 	}
-	return models.Lang{}, errors.New(fmt.Sprintf("can't parse file '%s'", file))
+	return models.Lang{}, errors.New(fmt.Sprintf("file is excluded: '%s'", file))
 }
 
 func parseSingleFile(file, ext string) (models.Lang, error) {
@@ -123,18 +129,22 @@ func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang
 	for _, pathData := range readResult {
 		pathName := pathData.Name()
 		if utils.IsDirectory(path + pathName + "/") {
-			_, subTotal = ParseDirectory(path+pathName+"/", langMap)
-			total = utils.ConcatLangs(total, subTotal)
+			if !utils.StringInSlice(path + pathName + "/", args.ExcludeList) {
+				_, subTotal = ParseDirectory(path+pathName+"/", langMap)
+				total = utils.ConcatLangs(total, subTotal)
+			}
 		} else if utils.IsFile(path + pathName) {
-			ext := NormalizeLang(GetExt(pathName))
-			if ExtIsRecognized(ext, availableExtensions) {
-				val, err := parseSingleFile(path+pathName, ext)
-				if err == nil {
-					total = utils.ConcatLangs(total, val)
-					if _, ok := langMap[ext]; ok {
-						val = utils.ConcatLangs(*langMap[ext], val)
+			if !utils.StringInSlice(path + pathName, args.ExcludeList) {
+				ext := NormalizeLang(GetExt(pathName))
+				if ExtIsRecognized(ext, availableExtensions) {
+					val, err := parseSingleFile(path+pathName, ext)
+					if err == nil {
+						total = utils.ConcatLangs(total, val)
+						if _, ok := langMap[ext]; ok {
+							val = utils.ConcatLangs(*langMap[ext], val)
+						}
+						langMap[ext] = &val
 					}
-					langMap[ext] = &val
 				}
 			}
 		}

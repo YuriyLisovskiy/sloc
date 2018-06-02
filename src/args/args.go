@@ -22,6 +22,7 @@ func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 		*dirPtr = "./"
 	}
 	parseOutPath()
+	parseExclude()
 	multipleFiles := SplitMultFiles(*filesPtr)
 	var err error = nil
 	isHelp := false
@@ -62,4 +63,8 @@ func parseOutPath() {
 		}
 	}
 	*OutPathPtr = path
+}
+
+func parseExclude() {
+	ExcludeList = strings.Split(*excludePtr, " ")
 }
