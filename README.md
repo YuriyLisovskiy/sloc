@@ -125,12 +125,24 @@ Also You can save output to a file:
 * Awk
 * Batch
 * Bourne Shell
-* C Shell
-* CoffeeScript
 * C
 * C++
 * C#
 * C/C++ Header
+* C Shell
+* CoffeeScript
+* ColdFusionScript
+* Coq
+* CSS
+* CUDA
+* CUDA Header
+* D
+* Dart
+* DeviceTree
+* Erlang
+* Forth
+* FORTRAN Legacy
+* FORTRAN Modern
 * F#
 * Go
 * Groovy
