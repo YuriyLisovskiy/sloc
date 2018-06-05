@@ -50,15 +50,15 @@ func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
 		if !IsExcluded(file) {
 			if utils.IsDirectory(file) {
 				_, subTotal = ParseDirectory(file, langMap)
-				total = utils.ConcatLangs(total, subTotal)
+				total = utils.MergeLangs(total, subTotal)
 			} else if utils.IsFile(file) {
 				ext := NormalizeLang(GetExt(file))
 				if ExtIsRecognized(ext) {
 					val, err := parseSingleFile(file, ext)
 					if err == nil {
-						total = utils.ConcatLangs(total, val)
+						total = utils.MergeLangs(total, val)
 						if _, ok := langMap[ext]; ok {
-							val = utils.ConcatLangs(*langMap[ext], val)
+							val = utils.MergeLangs(*langMap[ext], val)
 						}
 						langMap[ext] = &val
 					}
@@ -134,7 +134,7 @@ func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang
 		if utils.IsDirectory(path + pathName + "/") {
 			if !IsExcluded(path + pathName + "/") {
 				_, subTotal = ParseDirectory(path+pathName+"/", langMap)
-				total = utils.ConcatLangs(total, subTotal)
+				total = utils.MergeLangs(total, subTotal)
 			}
 		} else if utils.IsFile(path + pathName) {
 			if !IsExcluded(path + pathName) {
@@ -142,9 +142,9 @@ func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang
 				if ExtIsRecognized(ext) {
 					val, err := parseSingleFile(path+pathName, ext)
 					if err == nil {
-						total = utils.ConcatLangs(total, val)
+						total = utils.MergeLangs(total, val)
 						if _, ok := langMap[ext]; ok {
-							val = utils.ConcatLangs(*langMap[ext], val)
+							val = utils.MergeLangs(*langMap[ext], val)
 						}
 						langMap[ext] = &val
 					}

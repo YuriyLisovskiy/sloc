@@ -107,7 +107,7 @@ func IsFile(path string) bool {
 	return info.Mode().IsRegular()
 }
 
-func ConcatLangs(current, lang models.Lang) models.Lang {
+func MergeLangs(current, lang models.Lang) models.Lang {
 	return models.Lang{
 		Name:              current.Name,
 		CodeLinesCount:    current.CodeLinesCount + lang.CodeLinesCount,

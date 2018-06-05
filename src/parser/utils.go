@@ -48,6 +48,18 @@ func NormalizeLang(ext string) string {
 		ext = "asm"
 	case "btm", "cmd":
 		ext = "bat"
+	case "postcss":
+		ext = "css"
+	case "dtsi":
+		ext = "dts"
+	case "hrl":
+		ext = "erl"
+	case "4th", "fr", "frt", "fth", "f83", "fb", "fpm", "e4", "rx", "ft":
+		ext = "forth"
+	case "for", "ftn", "f77", "pfo":
+		ext = "f"
+	case "f08", "f90", "f95":
+		ext = "f03"
 	}
 	return ext
 }

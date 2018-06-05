@@ -65,5 +65,17 @@ var (
 		"sh":       {"Bourne Shell", shSComment, noComments},
 		"csh":      {"C Shell", shSComment, noComments},
 		"coffee":   {"CoffeeScript", shSComment, models.Comment{"###", "###"}},
+		"cfc":      {"ColdFusionScript", clangSComment, clangMComment},
+		"v":        {"Coq", noComments, models.Comment{"(*", "*)"}},
+		"css":      {"CSS", clangSComment, clangMComment},
+		"cu":       {"CUDA", clangSComment, clangMComment},
+		"cuh":      {"CUDA Header", clangSComment, clangMComment},
+		"d":        {"D", clangSComment, clangMComment},
+		"dart":     {"Dart", clangSComment, clangMComment},
+		"dts":      {"DeviceTree", clangSComment, clangMComment},
+		"erl":      {"Erlang", models.Comment{"%", "\n"}, noComments},
+		"forth":    {"Forth", models.Comment{"\\", "\n"}, models.Comment{"(", ")"}},
+		"f":        {"FORTRAN Legacy", models.Comment{"!", "\n"}, noComments},
+		"f03":      {"FORTRAN Legacy", models.Comment{"!", "\n"}, noComments},
 	}
 )

@@ -44,7 +44,7 @@ func TestGetFileNameFromPath(test *testing.T) {
 
 func TestConcatLangs(test *testing.T) {
 	for _, td := range concatLangsTestData {
-		actual := utils.ConcatLangs(td.current, td.lang)
+		actual := utils.MergeLangs(td.current, td.lang)
 		if actual != td.expected {
 			test.Errorf("parser.TestConcatLangs: expected %s, actual %s", td.expected.ToString(), actual.ToString())
 		}
