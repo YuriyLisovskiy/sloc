@@ -133,3 +133,13 @@ func MapToArray(langMap map[string]*models.Lang) []models.Lang {
 	}
 	return result
 }
+
+func NormalizePath(path string, isDirectory bool) string {
+	if !strings.HasPrefix(path, "./") && !strings.HasPrefix(path, "/") {
+		path = "./" + path
+	}
+	if isDirectory && !strings.HasSuffix(path, "/") {
+		path += "/"
+	}
+	return path
+}

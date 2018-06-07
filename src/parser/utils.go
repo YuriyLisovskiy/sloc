@@ -105,7 +105,7 @@ func IsExcluded(path string) bool {
 		if excluded == path {
 			switch i {
 			case len(args.ExcludeList) - 1:
-				args.ExcludeList = append(args.ExcludeList[:i], nil...)
+				args.ExcludeList = append(args.ExcludeList[:i], []string{}...)
 			default:
 				args.ExcludeList = append(args.ExcludeList[:i], args.ExcludeList[i+1:]...)
 			}

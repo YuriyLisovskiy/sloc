@@ -3,6 +3,7 @@ package args
 import (
 	"flag"
 	"strings"
+	"github.com/YuriyLisovskiy/sloc/src/utils"
 )
 
 func SplitMultFiles(filesStr string) []string {
@@ -66,10 +67,14 @@ func parseOutPath() {
 }
 
 func parseExclude() {
-	ExcludeList = strings.Split(*excludePtr, " ")
-	for i := 0; i < len(ExcludeList); i++ {
-		if !strings.HasPrefix(ExcludeList[i], "./") {
-			ExcludeList[i] = "./" + ExcludeList[i]
+	if len(*excludePtr) > 0 {
+		ExcludeList = strings.Split(*excludePtr, " ")
+		for i := 0; i < len(ExcludeList); i++ {
+			isDir := false
+			if utils.IsDirectory(ExcludeList[i]) {
+				isDir = true
+			}
+			ExcludeList[i] = utils.NormalizePath(ExcludeList[i], isDir)
 		}
 	}
 }
