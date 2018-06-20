@@ -6,7 +6,7 @@ import (
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 )
 
-func SplitMultFiles(filesStr string) []string {
+func splitMultFiles(filesStr string) []string {
 	var result []string
 	if len(filesStr) > 0 {
 		files := strings.Split(strings.Join(strings.Fields(filesStr), " "), " ")
@@ -24,7 +24,7 @@ func Parse() (string, string, []string, bool, bool, bool, bool, error) {
 	}
 	parseOutPath()
 	parseExclude()
-	multipleFiles := SplitMultFiles(*filesPtr)
+	multipleFiles := splitMultFiles(*filesPtr)
 	var err error = nil
 	isHelp := false
 	if *h || *help {

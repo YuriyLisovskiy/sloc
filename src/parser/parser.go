@@ -10,7 +10,7 @@ import (
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
-func ParseLine(line, singleComment, multiComment string) (Enum) {
+func parseLine(line, singleComment, multiComment string) (Enum) {
 	ln := strings.TrimSpace(line)
 	if len(ln) > 0 {
 		if singleComment != emptyString {
@@ -29,7 +29,7 @@ func ParseLine(line, singleComment, multiComment string) (Enum) {
 	return IsCode
 }
 
-func ParseMultiLineComment(lines []string, endComment string) (int) {
+func parseMultiLineComment(lines []string, endComment string) (int) {
 	index := 1
 	for i, line := range lines {
 		if strings.HasSuffix(line, endComment) {
@@ -41,6 +41,39 @@ func ParseMultiLineComment(lines []string, endComment string) (int) {
 		}
 	}
 	return index
+}
+
+func parseSingleFile(file, ext string) (models.Lang, error) {
+	langData := languageData[ext]
+	content, err := utils.ReadFile(file)
+	if err != nil {
+		return models.Lang{}, err
+	}
+	lines := SplitFile(content)
+	blankLines := 0
+	commentLines := 0
+	for i := 0; i < len(lines); i++ {
+		lineType := parseLine(lines[i], langData.SingleLineComment.Start, langData.MultiLineComment.Start)
+		switch lineType {
+		case IsBlank:
+			blankLines += 1
+		case IsSingleComment:
+			commentLines += 1
+		case IsMultiComment:
+			newIndex := parseMultiLineComment(lines[i:], langData.MultiLineComment.End)
+			commentLines += newIndex
+			i += newIndex - 1
+		}
+	}
+	result := models.Lang{
+		Name:              langData.Name,
+		CommentLinesCount: commentLines,
+		BlankLinesCount:   blankLines,
+		CodeLinesCount:    len(lines) - (blankLines + commentLines),
+		LinesCount:        len(lines),
+		FilesCount:        1,
+	}
+	return result, nil
 }
 
 func ParseMultiple(files []string) ([]models.Lang, models.Lang) {
@@ -81,39 +114,6 @@ func ParseFile(file string) (models.Lang, error) {
 		return models.Lang{}, errors.New(fmt.Sprintf("can't parse file '%s'", file))
 	}
 	return models.Lang{}, errors.New(fmt.Sprintf("file is excluded: '%s'", file))
-}
-
-func parseSingleFile(file, ext string) (models.Lang, error) {
-	langData := languageData[ext]
-	content, err := utils.ReadFile(file)
-	if err != nil {
-		return models.Lang{}, err
-	}
-	lines := SplitFile(content)
-	blankLines := 0
-	commentLines := 0
-	for i := 0; i < len(lines); i++ {
-		lineType := ParseLine(lines[i], langData.SingleLineComment.Start, langData.MultiLineComment.Start)
-		switch lineType {
-		case IsBlank:
-			blankLines += 1
-		case IsSingleComment:
-			commentLines += 1
-		case IsMultiComment:
-			newIndex := ParseMultiLineComment(lines[i:], langData.MultiLineComment.End)
-			commentLines += newIndex
-			i += newIndex - 1
-		}
-	}
-	result := models.Lang{
-		Name:              langData.Name,
-		CommentLinesCount: commentLines,
-		BlankLinesCount:   blankLines,
-		CodeLinesCount:    len(lines) - (blankLines + commentLines),
-		LinesCount:        len(lines),
-		FilesCount:        1,
-	}
-	return result, nil
 }
 
 func ParseDirectory(path string, langMap map[string]*models.Lang) ([]models.Lang, models.Lang) {

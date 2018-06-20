@@ -1,5 +1,9 @@
 package args
 
+import (
+	"testing"
+)
+
 var (
 	SplitMultFilesTestData = []struct {
 		input    string
@@ -23,3 +27,23 @@ var (
 		{"", "", []string{"file1.ext1", "file2.ext2"}, true},
 	}
 )
+
+func TestSplitMultFiles(test *testing.T) {
+	for _, td := range SplitMultFilesTestData {
+		actual := splitMultFiles(td.input)
+		for i, a := range actual {
+			if a != td.expected[i] {
+				test.Errorf("args.TestSplitMultFiles: expected %s, actual %s", td.expected, actual)
+			}
+		}
+	}
+}
+
+func TestValidateParams(test *testing.T) {
+	for _, td := range ValidateTestData {
+		actual := ValidateParams(td.dir, td.file, td.files) == nil
+		if actual != td.expected {
+			test.Errorf("args.TestValidate: expected %t, actual %t", td.expected, actual)
+		}
+	}
+}

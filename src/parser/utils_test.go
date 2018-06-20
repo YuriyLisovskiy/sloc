@@ -1,7 +1,8 @@
 package parser
 
 import (
-	"github.com/YuriyLisovskiy/sloc/src/parser"
+	"testing"
+	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
@@ -93,26 +94,61 @@ var (
 		},
 	}
 
-	parseLineTestData = []struct {
-		line     string
-		sc       string
-		mc       string
-		expected parser.Enum
-	}{
-		{"", "#", "#", parser.IsBlank},
-		{"// This is commented line", "//", "/*", parser.IsSingleComment},
-		{"/* This is single comment line */", "//", "/*", parser.IsMultiComment},
-		{"/* This is multi comment line", "//", "/*", parser.IsMultiComment},
-		{"def main():", "#", "\"\"\"", parser.IsCode},
-	}
 
-	parseMultiLineCommentTestData = []struct {
-		lines      []string
-		endComment string
-		expected   int
-	}{
-		{[]string{"/* Hello,", "World!", "Comment */", "func main() {"}, "*/", 3},
-		{[]string{"/* Hello World Comment */", "func main() {"}, "*/", 1},
-		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 0},
-	}
 )
+
+func TestNormalizeLang(test *testing.T) {
+	for _, td := range normalizeLangTestData {
+		actual := NormalizeLang(td.input)
+		if actual != td.expected {
+			test.Errorf("parser.TestNormalizeLang: expected %s, actual %s", td.expected, actual)
+		}
+	}
+}
+
+func TestGetExt(test *testing.T) {
+	for _, td := range getExtTestData {
+		actual := GetExt(td.input)
+		if actual != td.expected {
+			test.Errorf("parser.TestGetExt: expected %s, actual %s", td.expected, actual)
+		}
+	}
+}
+
+func TestExtIsRecognized(test *testing.T) {
+	for _, td := range extIsRecognizedTestData {
+		actual := ExtIsRecognized(td.ext)
+		if actual != td.expected {
+			test.Errorf("parser.TestExtIsRecognized: expected %t, actual %t", td.expected, actual)
+		}
+	}
+}
+
+func TestGetFileNameFromPath(test *testing.T) {
+	for _, td := range getFileNameFromPathTestData {
+		actual := getFileNameFromPath(td.input)
+		if actual != td.expected {
+			test.Errorf("parser.TestGetFileNameFromPath: expected %s, actual %s", td.expected, actual)
+		}
+	}
+}
+
+func TestConcatLangs(test *testing.T) {
+	for _, td := range concatLangsTestData {
+		actual := utils.MergeLangs(td.current, td.lang)
+		if actual != td.expected {
+			test.Errorf("parser.TestConcatLangs: expected %s, actual %s", td.expected.ToString(), actual.ToString())
+		}
+	}
+}
+
+func TestSplitFile(test *testing.T) {
+	for _, td := range splitFileTestData {
+		actual := SplitFile(td.input)
+		for i, obj := range actual {
+			if obj != td.expected[i] {
+				test.Errorf("parser.TestSplitFile: expected %s, actual %s", td.expected[i], obj)
+			}
+		}
+	}
+}

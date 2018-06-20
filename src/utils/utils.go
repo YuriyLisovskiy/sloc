@@ -12,14 +12,14 @@ import (
 )
 
 func GetTemplates(langs []models.Lang) (string, string, string) {
-	indent := FindIndentLen(langs)
-	header := fmt.Sprintf(GetFormatTemplate(Itos(indent), "s")+"\n", "Language", "Files", "Lines", "Blank", "Comments", "Code", )
+	indent := findIndentLen(langs)
+	header := fmt.Sprintf(getFormatTemplate(itos(indent), "s")+"\n", "Language", "Files", "Lines", "Blank", "Comments", "Code", )
 	line := strings.Join(make([]string, len(header)+1), "-") + "\n"
-	return line, line + header + line, GetFormatTemplate(Itos(indent), "d") + "\n"
+	return line, line + header + line, getFormatTemplate(itos(indent), "d") + "\n"
 
 }
 
-func GetFormatTemplate(indent, dataType string) string {
+func getFormatTemplate(indent, dataType string) string {
 	return " %-" + indent + "s%" + indent +
 		dataType + "%" + indent +
 		dataType + "%" + indent +
@@ -27,26 +27,26 @@ func GetFormatTemplate(indent, dataType string) string {
 		dataType + "%" + indent + dataType
 }
 
-func Itos(val int) string {
+func itos(val int) string {
 	return strconv.Itoa(val)
 }
 
-func Itol(val int) int {
-	return len(Itos(val))
+func itol(val int) int {
+	return len(itos(val))
 }
 
-func FindMax(first, second int) int {
+func findMax(first, second int) int {
 	return int(math.Max(float64(first), float64(second)))
 }
 
-func FindFieldWithMaxLen(lang models.Lang) int {
-	return FindMax(
-		len(lang.Name)+1, FindMax(
-			Itol(lang.FilesCount), FindMax(
-				Itol(lang.LinesCount), FindMax(
-					Itol(lang.BlankLinesCount), FindMax(
-						Itol(lang.CommentLinesCount), FindMax(
-							Itol(lang.CodeLinesCount), 12),
+func findFieldWithMaxLen(lang models.Lang) int {
+	return findMax(
+		len(lang.Name)+1, findMax(
+			itol(lang.FilesCount), findMax(
+				itol(lang.LinesCount), findMax(
+					itol(lang.BlankLinesCount), findMax(
+						itol(lang.CommentLinesCount), findMax(
+							itol(lang.CodeLinesCount), 12),
 					),
 				),
 			),
@@ -54,10 +54,10 @@ func FindFieldWithMaxLen(lang models.Lang) int {
 	)
 }
 
-func FindIndentLen(langs []models.Lang) int {
+func findIndentLen(langs []models.Lang) int {
 	max := 0
 	for _, lang := range langs {
-		newMax := FindFieldWithMaxLen(lang)
+		newMax := findFieldWithMaxLen(lang)
 		if max < newMax {
 			max = newMax
 		}

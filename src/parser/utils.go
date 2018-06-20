@@ -65,7 +65,7 @@ func NormalizeLang(ext string) string {
 }
 
 func GetExt(fileName string) string {
-	arr := strings.Split(GetFileNameFromPath(fileName), ".")
+	arr := strings.Split(getFileNameFromPath(fileName), ".")
 	res := fileName
 	if len(arr) > 0 {
 		res = arr[len(arr)-1]
@@ -82,7 +82,7 @@ func ExtIsRecognized(ext string) bool {
 	return false
 }
 
-func GetFileNameFromPath(path string) string {
+func getFileNameFromPath(path string) string {
 	index := strings.LastIndex(path, "/")
 	if index == -1 {
 		return path

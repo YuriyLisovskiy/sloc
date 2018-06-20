@@ -6,9 +6,9 @@ type Enum int
 
 const (
 	IsSingleComment Enum = iota
-	IsMultiComment  Enum = iota
-	IsBlank         Enum = iota
-	IsCode          Enum = iota
+	IsMultiComment
+	IsBlank
+	IsCode
 	emptyString          = ""
 )
 

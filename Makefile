@@ -61,7 +61,7 @@ solaris:
 	GOOS=solaris GOARCH=${ARCH64_amd64} go build -o bin/solaris/${ARCH64_amd64}/${BINARY}.bin ${FLAGS}
 
 test:
-	go test ./test/...
+	go test ./src/...
 
 clean:
 	-rm -rf bin/
