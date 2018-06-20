@@ -11,9 +11,13 @@ $ git clone https://github.com/YuriyLisovskiy/sloc.git
 
 To build for all supported operating systems:
 ```
-$ make all-os
+$ make build
 ``` 
 To run tests and build for all supported operating systems:
+```
+$ make
+```
+or
 ```
 $ make all
 ```
