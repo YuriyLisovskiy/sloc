@@ -3,9 +3,9 @@ package out
 import (
 	"fmt"
 	"errors"
-//	"encoding/xml"
-//	"encoding/json"
-//	"gopkg.in/yaml.v2"
+	"encoding/xml"
+	"encoding/json"
+	"gopkg.in/yaml.v2"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
@@ -27,8 +27,7 @@ func ToStd(langs []models.Lang, total *models.Lang) error {
 	return nil
 }
 
-func toFile(langs []models.Lang, total *models.Lang, fileType string) {// error {
-/*
+func toFile(langs []models.Lang, total *models.Lang, fileType string) error {
 	var err error = nil
 	var data []byte
 	xmlHeader := ""
@@ -37,6 +36,7 @@ func toFile(langs []models.Lang, total *models.Lang, fileType string) {// error 
 	}
 	switch fileType {
 	case "json":
+
 		data, err = json.MarshalIndent(langs, "", "    ")
 	case "xml":
 		data, err = xml.MarshalIndent(langs, "", "    ")
@@ -47,15 +47,9 @@ func toFile(langs []models.Lang, total *models.Lang, fileType string) {// error 
 	if err != nil {
 		return errors.New(fmt.Sprintf("%s: %s", fileType, err.Error()))
 	}
-	err = utils.CreateDir(*args.OutPathPtr)
-	if err != nil {
-		return errors.New(fmt.Sprintf("%s: %s", fileType, err.Error()))
-	}
-	return utils.WriteToFile(*args.OutPathPtr + args.DefaultOutFileName + "." + fileType + "", xmlHeader + string(data))
-*/
+	return utils.WriteToFile(fmt.Sprintf("sloc_report.%s", fileType), xmlHeader + string(data))
 }
 
-/*
 func ToJson(langs []models.Lang, total *models.Lang) error {
 	return toFile(langs, total, "json")
 }
@@ -67,4 +61,3 @@ func ToXml(langs []models.Lang, total *models.Lang) error {
 func ToYaml(langs []models.Lang, total *models.Lang) error {
 	return toFile(langs, total, "yml")
 }
-*/

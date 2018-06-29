@@ -9,8 +9,10 @@ const (
 	IsMultiComment
 	IsBlank
 	IsCode
-	emptyString          = ""
+	emptyString     = ""
 )
+
+var ExcludeList []string
 
 var (
 	noComments    = models.Comment{emptyString, emptyString}

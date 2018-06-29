@@ -12,14 +12,17 @@ var (
 		{" file1.cs    file2.hpp  ", []string{"file1.cs", "file2.hpp"}},
 	}
 	ValidateTestData = []struct{
-		dirs []string
-		files []string
+		dir string
+		file string
+		files string
 		expected bool
 	} {
-		{[]string{"dir/"}, []string{"file.ext"}, false},
-		{[]string{"dir/"}, nil, true},
-		{nil, []string{"file.ext"}, true},
-		{nil, nil, false},
+		{"dir/", "file.ext", "", false},
+		{"dir/", "", "file1.ext1 file2.ext2", false},
+		{"", "file.ext", "file1.ext1 file2.ext2", false},
+		{"dir/", "", "", true},
+		{"", "file.ext", "", true},
+		{"", "", "file1.ext1 file2.ext2", true},
 	}
 )
 
@@ -36,7 +39,7 @@ func TestSplitMultFiles(test *testing.T) {
 
 func TestValidateParams(test *testing.T) {
 	for _, td := range ValidateTestData {
-		actual := ValidateParams(td.dirs, td.files) == nil
+		actual := ValidateParams(td.dir, td.file, td.files) == nil
 		if actual != td.expected {
 			test.Errorf("args.TestValidate: expected %t, actual %t", td.expected, actual)
 		}

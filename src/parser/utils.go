@@ -2,7 +2,7 @@ package parser
 
 import (
 	"strings"
-	"github.com/YuriyLisovskiy/sloc/src/cli"
+	"github.com/YuriyLisovskiy/sloc/src/utils"
 )
 
 func NormalizeLang(ext string) string {
@@ -89,7 +89,7 @@ func getFileNameFromPath(path string) string {
 	}
 	pathLen := len(path)
 	if pathLen > 0 {
-		if path[pathLen - 1] == '/' {
+		if path[pathLen-1] == '/' {
 			return path
 		}
 	}
@@ -101,13 +101,13 @@ func SplitFile(content string) []string {
 }
 
 func IsExcluded(path string) bool {
-	for i, excluded := range cli.ExcludeList {
-		if excluded == path {
+	for i, excluded := range ExcludeList {
+		if utils.NormalizePath(excluded, utils.IsDirectory(excluded)) == path {
 			switch i {
-			case len(cli.ExcludeList) - 1:
-				cli.ExcludeList = append(cli.ExcludeList[:i], []string{}...)
+			case len(ExcludeList) - 1:
+				ExcludeList = append(ExcludeList[:i], []string{}...)
 			default:
-				cli.ExcludeList = append(cli.ExcludeList[:i], cli.ExcludeList[i+1:]...)
+				ExcludeList = append(ExcludeList[:i], ExcludeList[i+1:]...)
 			}
 			return true
 		}

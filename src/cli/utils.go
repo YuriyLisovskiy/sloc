@@ -1,9 +1,8 @@
 package cli
 
 import (
-	"flag"
 	"strings"
-	"github.com/YuriyLisovskiy/sloc/src/utils"
+	"github.com/YuriyLisovskiy/sloc/src/parser"
 )
 
 func splitMultFiles(filesStr string) []string {
@@ -17,23 +16,27 @@ func splitMultFiles(filesStr string) []string {
 	return result
 }
 
-func Parse(f, d, e []string) ([]string, []string, []string, error) {
-	flag.Parse()
+func Parse(f, d, m, e string) (string, string, []string, error) {
 	if len(d) == 0 && len(f) == 0 {
-		d = append(d, "./")
+		d = "./"
 	}
-	parseExclude(e)
-	return f, d, e, Validate(f, d)
+	parser.ExcludeList = splitMultFiles(e)
+	d, f, multiple := parseExcluded(d, f, splitMultFiles(m))
+	return d, f, multiple, Validate(d, f, m)
 }
 
-func parseExclude(excludeList []string) {
-	if len(excludeList) > 0 {
-		for i := 0; i < len(ExcludeList); i++ {
-			isDir := false
-			if utils.IsDirectory(ExcludeList[i]) {
-				isDir = true
-			}
-			ExcludeList[i] = utils.NormalizePath(ExcludeList[i], isDir)
+func parseExcluded(dir, file string, multiple []string) (string, string, []string) {
+	if parser.IsExcluded(dir) {
+		dir = ""
+	}
+	if parser.IsExcluded(file) {
+		file = ""
+	}
+	var multipleResult []string
+	for _, path := range multiple {
+		if !parser.IsExcluded(path) {
+			multipleResult = append(multipleResult, path)
 		}
 	}
+	return dir, file, multipleResult
 }
