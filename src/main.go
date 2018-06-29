@@ -1,15 +1,18 @@
 package main
 
+/*
 import (
 	"fmt"
 	"github.com/YuriyLisovskiy/sloc/src/out"
-	"github.com/YuriyLisovskiy/sloc/src/args"
+	"github.com/YuriyLisovskiy/sloc/src/cli"
 	"github.com/YuriyLisovskiy/sloc/src/parser"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
+*/
 
 func main() {
-	dir, file, multipleFiles, jsonOut, xmlOut, ymlOut, help, err := args.Parse()
+	/*
+	dirs, files, exclude, err := cli.Parse()
 	if err == nil {
 		if !help {
 			var result []models.Lang
@@ -50,4 +53,5 @@ func main() {
 	} else {
 		println(err.Error())
 	}
+	*/
 }

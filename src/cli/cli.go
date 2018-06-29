@@ -29,12 +29,12 @@ func (cli *CLI) validateArgs() {
 func (cli *CLI) Run() {
 	cli.validateArgs()
 
-	f := countCmd.String("f", "", "set file(s) to count lines")
-	d := countCmd.String("d", "", "set folder(s) to count lines")
-	e := countCmd.String("e", "", "set file(s) and(or) folder(s) to exclude from counting lines")
-	j := countCmd.Bool("j", false, "write result to json file")
-	x := countCmd.Bool("x", false, "write result to xml file")
-	y := countCmd.Bool("y", false, "write result to yaml file")
+//	f := countCmd.String("f", "", "set file(s) to count lines")
+//	d := countCmd.String("d", "", "set folder(s) to count lines")
+//	e := countCmd.String("e", "", "set file(s) and(or) folder(s) to exclude from counting lines")
+//	j := countCmd.Bool("j", false, "write result to json file")
+//	x := countCmd.Bool("x", false, "write result to xml file")
+//	y := countCmd.Bool("y", false, "write result to yaml file")
 
 	switch os.Args[1] {
 	case "count":
