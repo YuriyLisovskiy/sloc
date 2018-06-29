@@ -43,6 +43,7 @@ func (cli *CLI) Run() {
 	jsonOut := countCmd.Bool("json", false, "write result to json file")
 	xmlOut := countCmd.Bool("xml", false, "write result to xml file")
 	yamlOut := countCmd.Bool("yaml", false, "write result to yaml file")
+	printLog := countCmd.Bool("log", false, "print log")
 	switch os.Args[1] {
 	case "count":
 		err := countCmd.Parse(os.Args[2:])
@@ -62,16 +63,16 @@ func (cli *CLI) Run() {
 			var result []models.Lang
 			var total *models.Lang
 			if dir != "" {
-				res, newTotal := parser.ParseDirectory(dir, nil)
+				res, newTotal := parser.ParseDirectory(dir, nil, *printLog)
 				result = res
 				total = &newTotal
 			} else if file != "" {
-				resFile, err := parser.ParseFile(file)
+				resFile, err := parser.ParseFile(file, *printLog)
 				if err == nil {
 					result = []models.Lang{resFile}
 				}
 			} else if len(multiple) > 0 {
-				res, newTotal := parser.ParseMultiple(multiple)
+				res, newTotal := parser.ParseMultiple(multiple, *printLog)
 				result = res
 				total = &newTotal
 			}

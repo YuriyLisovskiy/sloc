@@ -6,14 +6,15 @@ var (
 	parseLineTestData = []struct {
 		line     string
 		sc       string
-		mc       string
+		mcs       string
+		mce       string
 		expected Enum
 	}{
-		{"", "#", "#", IsBlank},
-		{"// This is commented line", "//", "/*", IsSingleComment},
-		{"/* This is single comment line */", "//", "/*", IsMultiComment},
-		{"/* This is multi comment line", "//", "/*", IsMultiComment},
-		{"def main():", "#", "\"\"\"", IsCode},
+		{"", "#", "#", "\n", IsBlank},
+		{"// This is commented line", "//", "/*", "*/", IsSingleComment},
+		{"/* This is single comment line */", "//", "/*", "*/", IsSingleComment},
+		{"/* This is multi comment line", "//", "/*", "*/", IsMultiComment},
+		{"def main():", "#", "\"\"\"", "\"\"\"", IsCode},
 	}
 
 	parseMultiLineCommentTestData = []struct {
@@ -23,15 +24,15 @@ var (
 	}{
 		{[]string{"/* Hello,", "World!", "Comment */", "func main() {"}, "*/", 3},
 		{[]string{"/* Hello World Comment */", "func main() {"}, "*/", 1},
-		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 0},
+		{[]string{"/* Hello World Comment */ func main() {"}, "*/", 1},
 	}
 )
 
 func TestParseLine(test *testing.T) {
 	for _, td := range parseLineTestData {
-		actual := parseLine(td.line, td.sc, td.mc)
+		actual := parseLine(td.line, td.sc, td.mcs, td.mce)
 		if actual != td.expected {
-			test.Errorf("parser.TestNormalizeLang: expected %d, actual %d", td.expected, actual)
+			test.Errorf("parser.TestParseLine: expected %d, actual %d", td.expected, actual)
 		}
 	}
 }
@@ -40,7 +41,7 @@ func TestParseMultiLineComment(test *testing.T) {
 	for _, td := range parseMultiLineCommentTestData {
 		actual := parseMultiLineComment(td.lines, td.endComment)
 		if actual != td.expected {
-			test.Errorf("parser.TestNormalizeLang: expected %d, actual %d", td.expected, actual)
+			test.Errorf("parser.TestParseMultiLineComment: expected %d, actual %d", td.expected, actual)
 		}
 	}
 }
