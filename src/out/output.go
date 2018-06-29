@@ -3,10 +3,9 @@ package out
 import (
 	"fmt"
 	"errors"
-	"encoding/xml"
-	"encoding/json"
-	"gopkg.in/yaml.v2"
-	"github.com/YuriyLisovskiy/sloc/src/args"
+//	"encoding/xml"
+//	"encoding/json"
+//	"gopkg.in/yaml.v2"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
 	"github.com/YuriyLisovskiy/sloc/src/models"
 )
@@ -28,7 +27,8 @@ func ToStd(langs []models.Lang, total *models.Lang) error {
 	return nil
 }
 
-func toFile(langs []models.Lang, total *models.Lang, fileType string) error {
+func toFile(langs []models.Lang, total *models.Lang, fileType string) {// error {
+/*
 	var err error = nil
 	var data []byte
 	xmlHeader := ""
@@ -52,8 +52,10 @@ func toFile(langs []models.Lang, total *models.Lang, fileType string) error {
 		return errors.New(fmt.Sprintf("%s: %s", fileType, err.Error()))
 	}
 	return utils.WriteToFile(*args.OutPathPtr + args.DefaultOutFileName + "." + fileType + "", xmlHeader + string(data))
+*/
 }
 
+/*
 func ToJson(langs []models.Lang, total *models.Lang) error {
 	return toFile(langs, total, "json")
 }
@@ -65,3 +67,4 @@ func ToXml(langs []models.Lang, total *models.Lang) error {
 func ToYaml(langs []models.Lang, total *models.Lang) error {
 	return toFile(langs, total, "yml")
 }
+*/
