@@ -9,17 +9,13 @@ $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ## Build
 > Minimum version of Go language required: `go1.10`, see [golang installation](https://golang.org/doc/install)
 
-To build for all supported operating systems:
+To build binaries for all supported operating systems:
 ```
 $ make build
 ``` 
-To run tests and build for all supported operating systems:
+To run tests and build binaries for all supported operating systems:
 ```
 $ make
-```
-or
-```
-$ make all
 ```
 Available operating systems build:
 * **Linux**: `$ make linux` - to build all supported linux architectures, other:
@@ -47,7 +43,7 @@ $ make test
 ## Usage
 By default, `sloc` will count lines of code in current directory:
 ```
-$ ./sloc
+$ ./sloc count
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -59,7 +55,7 @@ $ ./sloc
 ```
 You can also pass a directory to inspect files:
 ```
-$ ./sloc -d src/
+$ ./sloc count -d src/
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -70,7 +66,7 @@ $ ./sloc -d src/
 ```
 Or file:
 ```
-$ ./sloc -f src/main.go
+$ ./sloc count -f src/main.go
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -79,20 +75,9 @@ $ ./sloc -f src/main.go
  Total                  1          46           3           0          43
 
 ```
-Or multiple files and(or) folders:
-```
-$ ./sloc -m "src/main.go src/parser/"
---------------------------------------------------------------------------
- Language           Files       Lines       Blank    Comments        Code
---------------------------------------------------------------------------
- Go                     2          82           9           0          73
---------------------------------------------------------------------------
- Total                  2          82           9           0          73
-
-```
 You can exclude some file(s) and(or) folder(s):
 ```
-$ ./sloc -d src/ -e "src/main.go src/out/output.go"
+$ ./sloc count -d src/ -e "src/main.go src/out/output.go"
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -103,21 +88,15 @@ $ ./sloc -d src/ -e "src/main.go src/out/output.go"
 ```
 Read usage info:
 ```
-$ ./sloc -h
-$ ./sloc --h
-$ ./sloc -help
-$ ./sloc --help
+$ ./sloc help
 ```
 Also You can save output to a file:
 * **Json**: 
-	* `$ ./sloc -j`
-	* `$ ./sloc -j -c path/to/result.json`
+	* `$ ./sloc count -json`
 * **Xml**:
-	* `$ ./sloc -x`
-	* `$ ./sloc -x -c path/to/result.xml`
+	* `$ ./sloc count -xml`
 * **Yaml**:
-	* `$ ./sloc -y`
-	* `$ ./sloc -y -c path/to/result.yml`
+	* `$ ./sloc count -yaml`
 ### Supported languages
 * ActionScript
 * Ada
