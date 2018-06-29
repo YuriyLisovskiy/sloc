@@ -73,17 +73,25 @@ $ sloc count -f src/main.go
 --------------------------------------------------------------------------
  Total                  1          46           3           0          43
 ```
-Or multiple file(s) and(or) folder(s):
+Or multiple file(s) and(or) folder(s) using `-log` flag:
 ```
-$ sloc count -m ".travis.yml Makefile src/cli/"
+$ sloc count -m ".travis.yml Makefile src/cli/" -log
+.travis.yml
+Makefile
+./src/cli/cli.go
+./src/cli/flags.go
+./src/cli/utils.go
+./src/cli/utils_test.go
+./src/cli/validator.go
+./src/cli/vars.go
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
  Yaml                   1          10           1           0           9
  Makefile               1          68          28           0          40
- Go                     6         254          29           0         225
+ Go                     6         253          27           0         226
 --------------------------------------------------------------------------
- Total                  8         332          58           0         274
+ Total                  8         331          56           0         275
 ```
 Exclude some file(s) and(or) folder(s):
 ```
