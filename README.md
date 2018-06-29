@@ -9,11 +9,11 @@ $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ## Build
 > Minimum version of Go language required: `go1.10`, see [golang installation](https://golang.org/doc/install)
 
-To build binaries for all supported operating systems:
+Build binaries for all supported operating systems:
 ```
 $ make build
 ``` 
-To run tests and build binaries for all supported operating systems:
+Run tests and build binaries for all supported operating systems:
 ```
 $ make
 ```
@@ -36,7 +36,7 @@ Available operating systems build:
 * **Solaris**(only amd64):
 	* `$ make solaris`
 ## Testing
-To run tests:
+Run tests:
 ```
 $ make test
 ```
@@ -53,7 +53,7 @@ $ sloc count
 --------------------------------------------------------------------------
  Total                 22        2020         118           0        1902
 ```
-You can also pass a directory to inspect files:
+Pass a directory to inspect files:
 ```
 $ sloc count -d src/
 --------------------------------------------------------------------------
@@ -85,7 +85,7 @@ $ sloc count -m ".travis.yml Makefile src/cli/"
 --------------------------------------------------------------------------
  Total                  8         332          58           0         274
 ```
-You can exclude some file(s) and(or) folder(s):
+Exclude some file(s) and(or) folder(s):
 ```
 $ sloc count -d src/ -e "src/main.go src/cli/"
 --------------------------------------------------------------------------
@@ -118,8 +118,8 @@ Usage:
   help
 	read usage
 ```
-Also You can save output to a file:
-* **Json**: 
+Save output to one of an available file format:
+* **Json**:
 	* `$ ./sloc count -json`
 * **Xml**:
 	* `$ ./sloc count -xml`
@@ -181,4 +181,4 @@ Also You can save output to a file:
 ## Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
 ## License
- This project is licensed under BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
