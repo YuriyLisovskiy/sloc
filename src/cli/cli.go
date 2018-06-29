@@ -17,11 +17,11 @@ func (cli *CLI) printUsage() {
 	fmt.Println("    -f\n\tset file to count lines")
 	fmt.Println("    -d\n\tset folder to count lines")
 	fmt.Println("    -m\n\tset set files and(or) folders to count lines using \"\"")
-	fmt.Println("    -e\n\tset file(s) and(or) folder(s) to exclude from counting lines")
+	fmt.Println("    -e\n\tset file(s) and(or) folder(s) to exclude from counting lines using \"\"")
 	fmt.Println("    -json\n\twrite result to json file")
 	fmt.Println("    -xml\n\twrite result to xml file")
 	fmt.Print("    -yaml\n\twrite result to yaml file\n\n")
-	fmt.Print("  help\n\tRead usage\n\n")
+	fmt.Print("  help\n\tread usage\n\n")
 }
 
 func (cli *CLI) validateArgs() bool {
@@ -36,7 +36,6 @@ func (cli *CLI) Run() {
 	if !cli.validateArgs() {
 		return
 	}
-
 	f := countCmd.String("f", "", "set file to count lines")
 	d := countCmd.String("d", "", "set folder to count lines")
 	m := countCmd.String("m", "", "set files and(or) folders to count lines using \"\"")
@@ -44,7 +43,6 @@ func (cli *CLI) Run() {
 	jsonOut := countCmd.Bool("json", false, "write result to json file")
 	xmlOut := countCmd.Bool("xml", false, "write result to xml file")
 	yamlOut := countCmd.Bool("yaml", false, "write result to yaml file")
-
 	switch os.Args[1] {
 	case "count":
 		err := countCmd.Parse(os.Args[2:])

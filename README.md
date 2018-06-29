@@ -98,6 +98,25 @@ $ sloc count -d src/ -e "src/main.go src/cli/"
 Read usage info:
 ```
 $ sloc help
+Usage:
+  count
+    -f
+	set file to count lines
+    -d
+	set folder to count lines
+    -m
+	set set files and(or) folders to count lines using ""
+    -e
+	set file(s) and(or) folder(s) to exclude from counting lines using ""
+    -json
+	write result to json file
+    -xml
+	write result to xml file
+    -yaml
+	write result to yaml file
+
+  help
+	read usage
 ```
 Also You can save output to a file:
 * **Json**: 
