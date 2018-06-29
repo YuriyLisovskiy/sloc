@@ -17,7 +17,7 @@ func splitMultFiles(filesStr string) []string {
 }
 
 func Parse(f, d, m, e string) (string, string, []string, error) {
-	if len(d) == 0 && len(f) == 0 {
+	if len(d) == 0 && len(f) == 0 && len(m) == 0 {
 		d = "./"
 	}
 	parser.ExcludeList = splitMultFiles(e)
