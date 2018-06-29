@@ -43,7 +43,7 @@ $ make test
 ## Usage
 By default, `sloc` will count lines of code in current directory:
 ```
-$ ./sloc count
+$ sloc count
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -55,40 +55,49 @@ $ ./sloc count
 ```
 You can also pass a directory to inspect files:
 ```
-$ ./sloc count -d src/
+$ sloc count -d src/
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
  Go                    11         690          68           0         622
 --------------------------------------------------------------------------
  Total                 11         690          68           0         622
-
 ```
 Or file:
 ```
-$ ./sloc count -f src/main.go
+$ sloc count -f src/main.go
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
  Go                     1          46           3           0          43
 --------------------------------------------------------------------------
  Total                  1          46           3           0          43
-
 ```
-You can exclude some file(s) and(or) folder(s):
+Or multiple file(s) and(or) folder(s):
 ```
-$ ./sloc count -d src/ -e "src/main.go src/out/output.go"
+$ sloc count -m ".travis.yml Makefile src/cli/"
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
- Go                     9         742          63           0         679
+ Yaml                   1          10           1           0           9
+ Makefile               1          68          28           0          40
+ Go                     6         254          29           0         225
 --------------------------------------------------------------------------
- Total                  9         742          63           0         679
-
+ Total                  8         332          58           0         274
+```
+You can exclude some file(s) and(or) folder(s):
+```
+$ sloc count -d src/ -e "src/main.go src/cli/"
+--------------------------------------------------------------------------
+ Language           Files       Lines       Blank    Comments        Code
+--------------------------------------------------------------------------
+ Go                    10        1110         100           0        1010
+--------------------------------------------------------------------------
+ Total                 10        1110         100           0        1010
 ```
 Read usage info:
 ```
-$ ./sloc help
+$ sloc help
 ```
 Also You can save output to a file:
 * **Json**: 
