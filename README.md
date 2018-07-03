@@ -33,7 +33,7 @@ Available operating systems build:
 	* `$ make freebsd-386`
 	* `$ make freebsd-amd64`
 	* `$ make freebsd-arm`
-* **Solaris**(only amd64):
+* **Solaris** (amd64 only):
 	* `$ make solaris`
 ## Testing
 Run tests:
@@ -127,13 +127,11 @@ Usage:
 	read usage
 ```
 Save output to one of an available file format:
-* **Json**:
-	* `$ ./sloc count -json`
-* **Xml**:
-	* `$ ./sloc count -xml`
-* **Yaml**:
-	* `$ ./sloc count -yaml`
+```
+$ ./sloc count -json -xml -yaml
+```
 ### Supported languages
+-
 * ActionScript
 * Ada
 * Agda
