@@ -4,6 +4,6 @@ go:
 notifications:
   email: false
 before_script:
-  - go get ./...
+  - go get ./src/...
 script:
   - make test
