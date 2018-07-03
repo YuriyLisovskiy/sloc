@@ -198,14 +198,36 @@ Save output to one of an available file format:
 * Perl
 * PHP
 * Plain text
+* Polly
+* Prolog
+* Protobuf
+* Pyret
 * Python
+* Qcl
+* QML
 * R
+* Razor
 * Ruby
+* RubyHtml
+* Rust
+* SaltStack
 * Sass
+* Scala
+* SML
 * SQL
+* Stylus
 * Swift
-* Xml
-* Yaml
+* Tcl
+* TeX
+* Toml
+* TypeScript
+* Typescript JSX
+* UnrealScript
+* Wolfram
+* XML
+* Yacc
+* YAML
+* Zig
 ## Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
 ## License
