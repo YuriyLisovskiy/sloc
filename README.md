@@ -193,6 +193,7 @@ Save output to one of an available file format:
 * Objective-C
 * Objective-C++
 * OCaml
+* Oz
 * Pascal
 * Perl
 * PHP
