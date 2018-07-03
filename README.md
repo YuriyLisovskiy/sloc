@@ -163,17 +163,36 @@ Save output to one of an available file format:
 * FORTRAN Legacy
 * FORTRAN Modern
 * F#
+* GLSL
 * Go
 * Groovy
+* Handlebars
 * Haskell
+* Hex
 * Html
+* Idris
+* INI
+* Intel Hex
+* Jai
 * Java
 * JavaScript
 * Json
+* Jsx
+* Julia
 * Kotlin
+* Lean
+* Less
+* LinkerScript
+* Lisp
+* Lua
 * Makefile
 * Markdown
-* Objective-C/C++
+* Mustache
+* Nim
+* Nix
+* Objective-C
+* Objective-C++
+* OCaml
 * Pascal
 * Perl
 * PHP
