@@ -9,6 +9,7 @@
 - [Build](#build)
 - [Testing](#testing)
 - [Usage](#usage)
+- [Supported Languages](#supported-languages)
 - [Author](#author)
 - [License](#license)
 ### Download
