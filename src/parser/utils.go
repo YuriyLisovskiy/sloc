@@ -42,7 +42,7 @@ func NormalizeLang(ext string) string {
 		ext = "ads"
 	case "lagda":
 		ext = "agda"
-	case "cshtml", "vbhtml", "asax", "ascx", "ashx", "asmx", "axd", "dbml", "edmx", "resx", "svc":
+	case "vbhtml", "asax", "ascx", "ashx", "asmx", "axd", "dbml", "edmx", "resx", "svc":
 		ext = "aspx"
 	case "s":
 		ext = "asm"
@@ -72,6 +72,16 @@ func NormalizeLang(ext string) string {
 		ext = "lisp"
 	case "mli":
 		ext = "ml"
+	case "pro":
+		ext = "p"
+	case "sc":
+		ext = "scala"
+	case "sty":
+		ext = "tex"
+	case "uci", "upkg":
+		ext = "uc"
+	case "nb":
+		ext = "wl"
 	}
 	return ext
 }
