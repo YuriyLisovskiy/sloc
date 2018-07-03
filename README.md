@@ -1,12 +1,21 @@
-# SLOC - Source Lines Of Code
+## SLOC - Source Lines Of Code
 [![License](https://img.shields.io/badge/BSD-3--Clause-orange.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/Go-1.10-blue.svg)](https://golang.org/)
 [![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)
-## Download
+
+[SLOC](https://github.com/YuriyLisovskiy/sloc) is a utility for counting source lines of code. Currently it supports [94 languages](#supported-languages).
+### Table of Contents
+- [Download](#download)
+- [Build](#build)
+- [Testing](#testing)
+- [Usage](#usage)
+- [Author](#author)
+- [License](#license)
+### Download
 ```
 $ git clone https://github.com/YuriyLisovskiy/sloc.git
 ```
-## Build
+### Build
 > Minimum version of Go language required: `go1.10`, see [golang installation](https://golang.org/doc/install)
 
 Build binaries for all supported operating systems:
@@ -35,12 +44,12 @@ Available operating systems build:
 	* `$ make freebsd-arm`
 * **Solaris** (amd64 only):
 	* `$ make solaris`
-## Testing
+### Testing
 Run tests:
 ```
 $ make test
 ```
-## Usage
+### Usage
 By default, `sloc` will count lines of code in current directory:
 ```
 $ sloc count
@@ -55,7 +64,7 @@ $ sloc count
 ```
 Pass a directory to inspect files:
 ```
-$ sloc count -d src/
+$ sloc count --directory src/
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -65,7 +74,7 @@ $ sloc count -d src/
 ```
 Or file:
 ```
-$ sloc count -f src/main.go
+$ sloc count --file src/main.go
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -75,7 +84,7 @@ $ sloc count -f src/main.go
 ```
 Or multiple file(s) and(or) folder(s) using `-log` flag:
 ```
-$ sloc count -m ".travis.yml Makefile src/cli/" -log
+$ sloc count --multiple ".travis.yml Makefile src/cli/" --log
 .travis.yml
 Makefile
 ./src/cli/cli.go
@@ -95,7 +104,7 @@ Makefile
 ```
 Exclude some file(s) and(or) folder(s):
 ```
-$ sloc count -d src/ -e "src/main.go src/cli/"
+$ sloc count --directory src/ --exclude "src/main.go src/cli/"
 --------------------------------------------------------------------------
  Language           Files       Lines       Blank    Comments        Code
 --------------------------------------------------------------------------
@@ -106,31 +115,37 @@ $ sloc count -d src/ -e "src/main.go src/cli/"
 Read usage info:
 ```
 $ sloc help
-Usage:
-  count
-    -f
-	set file to count lines
-    -d
-	set folder to count lines
-    -m
-	set set files and(or) folders to count lines using ""
-    -e
-	set file(s) and(or) folder(s) to exclude from counting lines using ""
-    -json
-	write result to json file
-    -xml
-	write result to xml file
-    -yaml
-	write result to yaml file
+USAGE:
+    sloc [COMMANDS] [FLAGS] [OPTIONS]
 
-  help
-	read usage
+COMMANDS:
+    count	Counts lines using FLAGS
+    help	Prints help information
+    version	Prints version information
+
+FLAGS:
+    -f, --file		Sets file to count lines
+    -d, --directory	Sets folder to count lines
+    -m, --multiple	Sets files and(or) folders to count lines using ""
+
+OPTIONS:
+    -e, --exclude	Sets file(s) and(or) folder(s) to exclude from counting lines using ""
+    -j, --json		Writes result to json file
+    -x, --xml		Writes result to xml file
+    -y, --yaml		Writes result to yaml file
+    -l, --log		Prints log
+
+```
+Get version of installed build:
+```
+$ sloc version
+sloc 0.0.1
 ```
 Save output to one of an available file format:
 ```
-$ ./sloc count -json -xml -yaml
+$ sloc count --json --xml --yaml
 ```
-### Supported languages
+#### Supported languages
 * ActionScript
 * Ada
 * Agda
@@ -225,7 +240,7 @@ $ ./sloc count -json -xml -yaml
 * Yacc
 * YAML
 * Zig
-## Author
+### Author
 * [Yuriy Lisovskiy](https://github.com/YuriyLisovskiy)
-## License
+### License
 This project is licensed under BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.
