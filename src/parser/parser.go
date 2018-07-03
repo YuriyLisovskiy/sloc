@@ -147,11 +147,11 @@ func ParseDirectory(path string, langMap map[string]*models.Lang, printLog bool)
 		} else if utils.IsFile(newPath) {
 			newPath = utils.NormalizePath(newPath, false)
 			if !IsExcluded(newPath) {
-				if printLog {
-					println(newPath)
-				}
 				ext := NormalizeLang(GetExt(newPath))
 				if ExtIsRecognized(ext) {
+					if printLog {
+						println(newPath)
+					}
 					val, err := parseSingleFile(newPath, ext)
 					if err == nil {
 						total = utils.MergeLangs(total, val)
