@@ -23,27 +23,29 @@ var (
 	sqlSComment   = models.Comment{"--", "\n"}
 	agdaMComment  = models.Comment{"{-", "-}"}
 	aspSComment   = models.Comment{"'", "\n"}
+	mlMComment   = models.Comment{"(*", "*)"}
 )
 
 var (
 	languageData = map[string]models.AvailableLang{
-		"as":       {"ActionScript", clangSComment, clangMComment},
+		"as":       cStyleLang("ActionScript"),
 		"c":        {"C", clangSComment, clangMComment},
 		"cpp":      {"C++", clangSComment, clangMComment},
 		"cs":       {"C#", clangSComment, clangMComment},
 		"ccpph":    {"C/C++ Header", clangSComment, clangMComment},
-		"fs":       {"F#", clangSComment, models.Comment{"(*", "*)"}},
+		"fs":       {"F#", clangSComment, mlMComment},
 		"go":       {"Go", clangSComment, clangMComment},
 		"groovy":   {"Groovy", clangSComment, clangMComment},
 		"hs":       {"Haskell", sqlSComment, agdaMComment},
 		"html":     {"Html", xmlComment, xmlComment},
 		"java":     {"Java", clangSComment, clangMComment},
 		"js":       {"JavaScript", clangSComment, clangMComment},
-		"json":     {"Json", clangSComment, clangMComment},
+		"json":     {"JSON", clangSComment, clangMComment},
 		"kt":       {"Kotlin", clangSComment, clangMComment},
 		"makefile": {"Makefile", shSComment, noComments},
 		"md":       {"Markdown", models.Comment{"[//]: # ", "\n"}, xmlComment},
 		"m":        {"Objective-C", clangSComment, clangMComment},
+		"mm":       {"Objective-C", clangSComment, clangMComment},
 		"txt":      {"Plain text", noComments, noComments},
 		"pas":      {"Pascal", models.Comment{"{", "}"}, models.Comment{"{*", "*}"}},
 		"pl":       {"Perl", shSComment, models.Comment{"=begin", "=cut"}},
@@ -68,7 +70,7 @@ var (
 		"csh":      {"C Shell", shSComment, noComments},
 		"coffee":   {"CoffeeScript", shSComment, models.Comment{"###", "###"}},
 		"cfc":      {"ColdFusionScript", clangSComment, clangMComment},
-		"v":        {"Coq", noComments, models.Comment{"(*", "*)"}},
+		"v":        {"Coq", noComments, mlMComment},
 		"css":      {"CSS", clangSComment, clangMComment},
 		"cu":       {"CUDA", clangSComment, clangMComment},
 		"cuh":      {"CUDA Header", clangSComment, clangMComment},
@@ -78,6 +80,24 @@ var (
 		"erl":      {"Erlang", models.Comment{"%", "\n"}, noComments},
 		"forth":    {"Forth", models.Comment{"\\", "\n"}, models.Comment{"(", ")"}},
 		"f":        {"FORTRAN Legacy", models.Comment{"!", "\n"}, noComments},
-		"f03":      {"FORTRAN Legacy", models.Comment{"!", "\n"}, noComments},
+		"f03":      {"FORTRAN Modern", models.Comment{"!", "\n"}, noComments},
+		"vert":     {"GLSL", clangSComment, clangMComment},
+		"hbs":      {"Handlebars", xmlComment, models.Comment{"{{!", "}}"}},
+		"hex":      {"Hex", noComments, noComments},
+		"idr":      {"Idris", sqlSComment, agdaMComment},
+		"ini":      {"INI", models.Comment{";", "\n"}, noComments},
+		"ihex":     {"Intel Hex", noComments, noComments},
+		"jai":      {"Jai", clangSComment, clangMComment},
+		"jsx":      {"Jsx", clangSComment, clangMComment},
+		"jl":       {"Julia", shSComment, models.Comment{"#=", "=#"}},
+		"lean":     {"Lean", sqlSComment, models.Comment{"/-", "-/"}},
+		"less":     {"Less", clangSComment, clangMComment},
+		"lds":      {"LinkerScript", clangSComment, clangMComment},
+		"lisp":     {"Lisp", models.Comment{";", "\n"}, models.Comment{"|#", "#|"}},
+		"lua":      {"Lua", sqlSComment, models.Comment{"--[[", "]]"}},
+		"mustache": {"Mustache", noComments, models.Comment{"{{!", "}}"}},
+		"nim":      {"Nim", shSComment, noComments},
+		"nix":      {"Nix", shSComment, models.Comment{"/*", "*/"}},
+		"ml":       {"OCaml", noComments, mlMComment},
 	}
 )

@@ -3,6 +3,7 @@ package parser
 import (
 	"strings"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
+	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
 func NormalizeLang(ext string) string {
@@ -60,6 +61,18 @@ func NormalizeLang(ext string) string {
 		ext = "f"
 	case "f08", "f90", "f95":
 		ext = "f03"
+	case "tesc", "tese", "geom", "frag", "comp":
+		ext = "vert"
+	case "handlebars":
+		ext = "hbs"
+	case "lidr":
+		ext = "idr"
+	case "hlean":
+		ext = "lean"
+	case "el", "lsp", "scm", "ss", "rkt":
+		ext = "lisp"
+	case "mli":
+		ext = "ml"
 	}
 	return ext
 }
@@ -113,4 +126,16 @@ func IsExcluded(path string) bool {
 		}
 	}
 	return false
+}
+
+func lang(langName string, slc, mlc models.Comment) models.AvailableLang {
+	return models.AvailableLang{Name: langName, SingleLineComment: slc, MultiLineComment: mlc}
+}
+
+func cStyleLang(langName string) models.AvailableLang {
+	return models.AvailableLang{Name: langName, SingleLineComment: clangSComment, MultiLineComment: clangMComment}
+}
+
+func shStyleLang(langName string) models.AvailableLang {
+	return models.AvailableLang{Name: langName, SingleLineComment: clangSComment, MultiLineComment: clangMComment}
 }
