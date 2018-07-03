@@ -12,7 +12,10 @@ const (
 	emptyString     = ""
 )
 
-var ExcludeList []string
+var (
+	ExcludeList    []string
+	ExtExcludeList []string
+)
 
 var (
 	noneComment    = models.Comment{emptyString, emptyString}

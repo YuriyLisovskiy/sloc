@@ -136,3 +136,12 @@ func IsExcluded(path string) bool {
 	}
 	return false
 }
+
+func extIsExcluded(ext string) bool {
+	for _, e := range ExtExcludeList {
+		if ext == e {
+			return true
+		}
+	}
+	return false
+}

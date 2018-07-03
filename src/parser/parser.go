@@ -109,8 +109,9 @@ func ParseMultiple(files []string, printLog bool) ([]models.Lang, models.Lang) {
 }
 
 func ParseFile(file string, printLog bool) (models.Lang, error) {
-	if !IsExcluded(file) {
-		ext := NormalizeLang(GetExt(file))
+	ext := GetExt(file)
+	if !IsExcluded(file) && !extIsExcluded(ext) {
+		ext = NormalizeLang(ext)
 		if ExtIsRecognized(ext) {
 			if printLog {
 				println(file)
@@ -146,8 +147,9 @@ func ParseDirectory(path string, langMap map[string]*models.Lang, printLog bool)
 			}
 		} else if utils.IsFile(newPath) {
 			newPath = utils.NormalizePath(newPath, false)
-			if !IsExcluded(newPath) {
-				ext := NormalizeLang(GetExt(newPath))
+			ext := GetExt(newPath)
+			if !IsExcluded(newPath) && !extIsExcluded(ext) {
+				ext = NormalizeLang(ext)
 				if ExtIsRecognized(ext) {
 					if printLog {
 						println(newPath)
