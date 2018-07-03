@@ -128,14 +128,26 @@ func IsExcluded(path string) bool {
 	return false
 }
 
-func lang(langName string, slc, mlc models.Comment) models.AvailableLang {
-	return models.AvailableLang{Name: langName, SingleLineComment: slc, MultiLineComment: mlc}
+func language(lang string, slc, mlc models.Comment) models.AvailableLang {
+	return models.AvailableLang{Name: lang, SingleLineComment: slc, MultiLineComment: mlc}
 }
 
-func cStyleLang(langName string) models.AvailableLang {
-	return models.AvailableLang{Name: langName, SingleLineComment: clangSComment, MultiLineComment: clangMComment}
+func cStyle(lang string) models.AvailableLang {
+	return language(lang, clangSComment, clangMComment)
 }
 
-func shStyleLang(langName string) models.AvailableLang {
-	return models.AvailableLang{Name: langName, SingleLineComment: clangSComment, MultiLineComment: clangMComment}
+func shStyle(lang string) models.AvailableLang {
+	return language(lang, shSComment, noneComments)
+}
+
+func noComments(lang string) models.AvailableLang {
+	return language(lang, noneComments, noneComments)
+}
+
+func htmlStyle(lang string) models.AvailableLang {
+	return language(lang, noneComments, xmlComment)
+}
+
+func mlStyle(lang string) models.AvailableLang {
+	return language(lang, noneComments, mlMComment)
 }
