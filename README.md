@@ -131,7 +131,6 @@ Save output to one of an available file format:
 $ ./sloc count -json -xml -yaml
 ```
 ### Supported languages
----------------
 * ActionScript
 * Ada
 * Agda
