@@ -15,7 +15,7 @@ const (
 var ExcludeList []string
 
 var (
-	noneComments    = models.Comment{emptyString, emptyString}
+	noneComment    = models.Comment{emptyString, emptyString}
 	clangSComment = models.Comment{"//", "\n"}
 	clangMComment = models.Comment{"/*", "*/"}
 	shSComment    = models.Comment{"#", "\n"}
@@ -76,33 +76,35 @@ var (
 		"v":        mlStyle("Coq"),
 		"ml":       mlStyle("OCaml"),
 
-		"md":       language("Markdown", models.Comment{"[//]: # ", "\n"}, xmlComment),
+		"md":       language("Markdown", singleComment("[//]: # "), xmlComment),
 		"pas":      language("Pascal", models.Comment{"{", "}"}, models.Comment{"{*", "*}"}),
 		"pl":       language("Perl", shSComment, models.Comment{"=begin", "=cut"}),
 		"py":       language("Python", shSComment, models.Comment{"\"\"\"", "\"\"\""}),
 		"rb":       language("Ruby", shSComment, models.Comment{"=begin", "=end"}),
 		"sql":      language("SQL", sqlSComment, clangMComment),
-		"ads":      language("Ada", sqlSComment, noneComments),
+		"ads":      language("Ada", sqlSComment, noneComment),
 		"agda":     language("Agda", sqlSComment, agdaMComment),
 		"asp":      language("ASP", aspSComment, xmlComment),
 		"aspx":     language("ASP.NET", aspSComment, xmlComment),
 		"asm":      language("Assembly", shSComment, clangMComment),
-		"bat":      language("Batch", models.Comment{"REM", "\n"}, noneComments),
+		"bat":      language("Batch", singleComment("REM"), noneComment),
 		"coffee":   language("CoffeeScript", shSComment, models.Comment{"###", "###"}),
 		"fs":       language("F#", clangSComment, mlMComment),
 		"hs":       language("Haskell", sqlSComment, agdaMComment),
-		"erl":      language("Erlang", models.Comment{"%", "\n"}, noneComments),
-		"forth":    language("Forth", models.Comment{"\\", "\n"}, models.Comment{"(", ")"}),
-		"f":        language("FORTRAN Legacy", models.Comment{"!", "\n"}, noneComments),
-		"f03":      language("FORTRAN Modern", models.Comment{"!", "\n"}, noneComments),
+		"erl":      language("Erlang", singleComment("%"), noneComment),
+		"forth":    language("Forth", singleComment("\\"), models.Comment{"(", ")"}),
+		"f":        language("FORTRAN Legacy", singleComment("!"), noneComment),
+		"f03":      language("FORTRAN Modern", singleComment("!"), noneComment),
 		"hbs":      language("Handlebars", xmlComment, models.Comment{"{{!", "}}"}),
 		"idr":      language("Idris", sqlSComment, agdaMComment),
-		"ini":      language("INI", models.Comment{";", "\n"}, noneComments),
+		"ini":      language("INI", singleComment(";"), noneComment),
 		"jl":       language("Julia", shSComment, models.Comment{"#=", "=#"}),
 		"lean":     language("Lean", sqlSComment, models.Comment{"/-", "-/"}),
-		"lisp":     language("Lisp", models.Comment{";", "\n"}, models.Comment{"|#", "#|"}),
+		"lisp":     language("Lisp", singleComment(";"), models.Comment{"|#", "#|"}),
 		"lua":      language("Lua", sqlSComment, models.Comment{"--[[", "]]"}),
-		"mustache": language("Mustache", noneComments, models.Comment{"{{!", "}}"}),
+		"mustache": language("Mustache", noneComment, models.Comment{"{{!", "}}"}),
 		"nix":      language("Nix", shSComment, models.Comment{"/*", "*/"}),
+
+		"oz":      prologStyle("Oz"),
 	}
 )

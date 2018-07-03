@@ -3,7 +3,6 @@ package parser
 import (
 	"strings"
 	"github.com/YuriyLisovskiy/sloc/src/utils"
-	"github.com/YuriyLisovskiy/sloc/src/models"
 )
 
 func NormalizeLang(ext string) string {
@@ -126,28 +125,4 @@ func IsExcluded(path string) bool {
 		}
 	}
 	return false
-}
-
-func language(lang string, slc, mlc models.Comment) models.AvailableLang {
-	return models.AvailableLang{Name: lang, SingleLineComment: slc, MultiLineComment: mlc}
-}
-
-func cStyle(lang string) models.AvailableLang {
-	return language(lang, clangSComment, clangMComment)
-}
-
-func shStyle(lang string) models.AvailableLang {
-	return language(lang, shSComment, noneComments)
-}
-
-func noComments(lang string) models.AvailableLang {
-	return language(lang, noneComments, noneComments)
-}
-
-func htmlStyle(lang string) models.AvailableLang {
-	return language(lang, noneComments, xmlComment)
-}
-
-func mlStyle(lang string) models.AvailableLang {
-	return language(lang, noneComments, mlMComment)
 }
