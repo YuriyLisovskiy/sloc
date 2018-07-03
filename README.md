@@ -83,7 +83,7 @@ $ sloc count --file src/main.go
 --------------------------------------------------------------------------
  Total                  1          46           3           0          43
 ```
-Or multiple file(s) and(or) folder(s) using `-log` flag:
+Or multiple file(s) and(or) folder(s) with log:
 ```
 $ sloc count --multiple ".travis.yml Makefile src/cli/" --log
 .travis.yml
