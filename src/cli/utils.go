@@ -21,22 +21,16 @@ func Parse(f, d, m, e string) (string, string, []string, error) {
 		d = "./"
 	}
 	parser.ExcludeList = splitMultFiles(e)
-	parser.ExtExcludeList = parseExcludedExts(parser.ExcludeList)
+	parser.ExtExcludeList = parseExcludedExts()
 	d, f, multiple := parseExcluded(d, f, splitMultFiles(m))
 	return d, f, multiple, Validate(d, f, m)
 }
 
-func parseExcludedExts(excludeList []string) []string {
+func parseExcludedExts() []string {
 	var result []string
-	for i, e := range excludeList {
-		if strings.HasPrefix(e, "*.") {
-			result = append(result, parser.GetExt(e))
-			switch i {
-			case len(parser.ExcludeList) - 1:
-				parser.ExcludeList = append(parser.ExcludeList[:i], []string{}...)
-			default:
-				parser.ExcludeList = append(parser.ExcludeList[:i], parser.ExcludeList[i+1:]...)
-			}
+	for i := 0; i < len(parser.ExcludeList); i++ {
+		if strings.HasPrefix(parser.ExcludeList[i], "*.") {
+			result = append(result, parser.GetExt(parser.ExcludeList[i]))
 		}
 	}
 	return result

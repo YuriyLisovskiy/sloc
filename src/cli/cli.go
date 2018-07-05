@@ -67,16 +67,16 @@ func (cli *CLI) Run() {
 			var result []models.Lang
 			var total *models.Lang
 			if dir != "" {
-				res, newTotal := parser.ParseDirectory(dir, nil, *printLog)
+				res, newTotal := parser.ParseDirectory(dir, nil, *printL)
 				result = res
 				total = &newTotal
 			} else if file != "" {
-				resFile, err := parser.ParseFile(file, *printLog)
+				resFile, err := parser.ParseFile(file, *printL)
 				if err == nil {
 					result = []models.Lang{resFile}
 				}
 			} else if len(multiple) > 0 {
-				res, newTotal := parser.ParseMultiple(multiple, *printLog)
+				res, newTotal := parser.ParseMultiple(multiple, *printL)
 				result = res
 				total = &newTotal
 			}
