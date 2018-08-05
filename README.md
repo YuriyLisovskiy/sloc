@@ -2,6 +2,7 @@
 [![License](https://img.shields.io/badge/BSD-3--Clause-orange.svg)](LICENSE)
 [![Language](https://img.shields.io/badge/Go-1.10-blue.svg)](https://golang.org/)
 [![Build Status](https://travis-ci.org/YuriyLisovskiy/sloc.svg?branch=master)](https://travis-ci.org/YuriyLisovskiy/sloc)
+[![Coverage Status](https://coveralls.io/repos/github/YuriyLisovskiy/sloc/badge.svg?branch=master)](https://coveralls.io/github/YuriyLisovskiy/sloc?branch=master)
 
 [SLOC](https://github.com/YuriyLisovskiy/sloc) is a utility for counting source lines of code. Currently it supports [94 languages](#supported-languages).
 ### Table of Contents
